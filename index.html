@@ -52,17 +52,17 @@
         <div id="start-highscore" style="font-size: 8px; color: #ffcc00; margin: 8px 0;"></div>
         <div id="char-select"></div>
         <div id="start-instructions">
-            WASD / ← → ↑ ↓ MOVER &nbsp; SPACE BOMBA<br>
-            ← → SELECIONAR PERSONAGEM
+            WASD / ← → ↑ ↓ MOVER &nbsp; SPACE BOMBA &nbsp; ESC PAUSA<br>
+            ← → SELECIONAR PERSONAGEM &nbsp; ENTER / HOLD SPACE (0.5s) CONFIRMAR
         </div>
-        <button class="start-btn" onclick="startGame()">SPACE / ENTER — START</button>
+        <button class="start-btn" onclick="startGame()">ENTER / HOLD SPACE (0.5s) — START</button>
     </div>
 
     <!-- Level Up Overlay -->
     <div id="levelup-overlay">
         <div id="levelup-title">⬆️ LEVEL UP!</div>
         <div id="upgrade-options"></div>
-        <div class="upgrade-hint" id="upgrade-hint">← → SELECIONAR &nbsp; SPACE/ENTER CONFIRMAR</div>
+        <div class="upgrade-hint" id="upgrade-hint">← → SELECIONAR &nbsp; ENTER / HOLD SPACE (0.5s) CONFIRMAR</div>
     </div>
 
     <!-- Game Over -->
@@ -72,7 +72,17 @@
         <div class="gameover-stat" id="go-kills"></div>
         <div class="gameover-stat" id="go-level"></div>
         <div class="gameover-stat" id="go-highscore" style="color:#ffcc00; margin-top:6px;"></div>
-        <button class="go-btn" onclick="startGame()">SPACE / ENTER — RETRY</button>
+        <button class="go-btn" onclick="startGame()">ENTER / HOLD SPACE (0.5s) — RETRY</button>
+    </div>
+
+    <!-- Pause Menu -->
+    <div id="pause-overlay">
+        <div id="pause-title">⏸️ PAUSED</div>
+        <div id="pause-options">
+            <div class="pause-option selected" onclick="resumeGame()">▶️ RETOMAR JOGO</div>
+            <div class="pause-option" onclick="returnToCharSelect()">🔙 VOLTAR PARA SELEÇÃO</div>
+        </div>
+        <div class="pause-hint">↑ ↓ SELECIONAR &nbsp; ENTER / HOLD SPACE (0.5s) CONFIRMAR</div>
     </div>
 
     <!-- Scripts (order matters: dependencies first) -->

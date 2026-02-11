@@ -74,6 +74,9 @@ function showLevelUp(isChest) {
             <div class="upgrade-icon">${upg.icon}</div>
             <div class="upgrade-name">${upg.name}</div>
             <div class="upgrade-desc">${upg.desc}</div>
+            <div class="upgrade-progress-container">
+                <div class="upgrade-progress-bar"></div>
+            </div>
         `;
         card.addEventListener('click', () => {
             selectedUpgrade = idx;

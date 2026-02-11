@@ -104,8 +104,34 @@ function updateHUD() {
     document.getElementById('bomb-cooldown-bar').style.width = `${cdPct}%`;
 }
 
+// ===================== PAUSE SYSTEM =====================
+function pauseGame() {
+    if (!gameRunning || gamePaused) return;
+    gamePaused = true;
+    selectedPauseOption = 0;
+    document.getElementById('pause-overlay').classList.add('active');
+    updatePauseSelection();
+}
+
+function resumeGame() {
+    gamePaused = false;
+    document.getElementById('pause-overlay').classList.remove('active');
+}
+
+function returnToCharSelect() {
+    gameRunning = false;
+    gamePaused = false;
+    document.getElementById('pause-overlay').classList.remove('active');
+    document.getElementById('start-overlay').classList.remove('hidden');
+    selectedChar = 0;
+    updateCharSelection();
+}
+
 // ===================== GAME LOOP =====================
 function gameLoop() {
+    // Handle Space hold for menu confirmations
+    handleSpaceHold();
+
     update();
     render();
     requestAnimationFrame(gameLoop);
