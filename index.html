@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bomber Vampire — Survivors</title>
+    <meta name="description"
+        content="Bomber Vampire: um jogo de sobrevivência com bombas estilo Bomberman + Vampire Survivors">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <canvas id="game"></canvas>
+
+    <!-- White Flash overlay (juice) -->
+    <div id="white-flash"></div>
+
+    <!-- Kill Streak display -->
+    <div id="streak-display"></div>
+
+    <!-- HUD -->
+    <div id="hud">
+        <div class="hud-left">
+            <div class="hud-label">HP</div>
+            <div id="hp-bar-container">
+                <div id="hp-bar"></div>
+            </div>
+            <div class="hud-label" style="margin-top: 6px;">💣 BOMBS</div>
+            <div id="bomb-cooldown-container">
+                <div id="bomb-cooldown-bar"></div>
+            </div>
+            <div class="hud-value" id="bomb-count">💣 1/1</div>
+        </div>
+        <div class="hud-center">
+            <div class="hud-value" id="timer">00:00</div>
+            <div id="xp-bar-container">
+                <div id="xp-bar"></div>
+            </div>
+            <div class="hud-value" id="level-display">LV 1</div>
+        </div>
+        <div class="hud-right">
+            <div class="hud-label">KILLS</div>
+            <div class="hud-value" id="kills">0</div>
+        </div>
+    </div>
+
+    <!-- Start / Character Select Overlay -->
+    <div id="start-overlay">
+        <div id="game-title">💣 BOMBER VAMPIRE</div>
+        <div id="game-subtitle">S U R V I V O R S</div>
+        <div id="start-highscore" style="font-size: 8px; color: #ffcc00; margin: 8px 0;"></div>
+        <div id="char-select"></div>
+        <div id="start-instructions">
+            WASD / ← → ↑ ↓ MOVER &nbsp; SPACE BOMBA<br>
+            ← → SELECIONAR PERSONAGEM
+        </div>
+        <button class="start-btn" onclick="startGame()">SPACE / ENTER — START</button>
+    </div>
+
+    <!-- Level Up Overlay -->
+    <div id="levelup-overlay">
+        <div id="levelup-title">⬆️ LEVEL UP!</div>
+        <div id="upgrade-options"></div>
+        <div class="upgrade-hint" id="upgrade-hint">← → SELECIONAR &nbsp; SPACE/ENTER CONFIRMAR</div>
+    </div>
+
+    <!-- Game Over -->
+    <div id="gameover-overlay">
+        <div id="gameover-title">GAME OVER</div>
+        <div class="gameover-stat" id="go-time"></div>
+        <div class="gameover-stat" id="go-kills"></div>
+        <div class="gameover-stat" id="go-level"></div>
+        <div class="gameover-stat" id="go-highscore" style="color:#ffcc00; margin-top:6px;"></div>
+        <button class="go-btn" onclick="startGame()">SPACE / ENTER — RETRY</button>
+    </div>
+
+    <!-- Scripts (order matters: dependencies first) -->
+    <script src="js/constants.js"></script>
+    <script src="js/juice.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/bombs.js"></script>
+    <script src="js/enemies.js"></script>
+    <script src="js/gems.js"></script>
+    <script src="js/upgrades.js"></script>
+    <script src="js/waves.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+</html>
