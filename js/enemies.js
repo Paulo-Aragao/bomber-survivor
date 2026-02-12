@@ -2,11 +2,11 @@
 let enemies = [];
 
 const ENEMY_TYPES = {
-    slime: { color: '#44cc44', hp: 1, speed: 0.8, size: 0.6, xp: 1, moveDelay: 30 },
-    bat: { color: '#aa44dd', hp: 1, speed: 1.5, size: 0.5, xp: 1, moveDelay: 15 },
-    skeleton: { color: '#ccccaa', hp: 2, speed: 1, size: 0.65, xp: 2, moveDelay: 22 },
-    ghost: { color: '#6688ff', hp: 3, speed: 1.2, size: 0.7, xp: 3, moveDelay: 18 },
-    demon: { color: '#ff3333', hp: 5, speed: 0.6, size: 0.85, xp: 5, moveDelay: 28 },
+    slime: { color: '#44cc44', hp: 1, speed: 0.8, size: 0.6, xp: 1, moveDelay: 30, spriteId: 1, variants: 5 },
+    bat: { color: '#aa44dd', hp: 1, speed: 1.5, size: 0.5, xp: 1, moveDelay: 15, spriteId: 6, variants: 5 },
+    skeleton: { color: '#ccccaa', hp: 2, speed: 1, size: 0.65, xp: 2, moveDelay: 22, spriteId: 11, variants: 5 },
+    ghost: { color: '#6688ff', hp: 3, speed: 1.2, size: 0.7, xp: 3, moveDelay: 18, spriteId: 16, variants: 5 },
+    demon: { color: '#ff3333', hp: 5, speed: 0.6, size: 0.85, xp: 5, moveDelay: 28, spriteId: 21, variants: 8 },
 };
 
 function getMaxEnemies() {
@@ -54,6 +54,10 @@ function spawnEnemy() {
     const hpMult = getHPMultiplier();
     const finalHp = Math.ceil(type.hp * hpMult);
 
+    // Random sprite variant
+    const variant = Math.floor(Math.random() * type.variants);
+    const spriteId = type.spriteId + variant;
+
     enemies.push({
         gx: cgx, gy: cgy,
         x: cgx * TILE + TILE / 2,
@@ -61,6 +65,7 @@ function spawnEnemy() {
         targetX: cgx * TILE + TILE / 2,
         targetY: cgy * TILE + TILE / 2,
         type: typeName,
+        spriteId: spriteId,
         hp: finalHp,
         maxHp: finalHp,
         moveTimer: Math.floor(Math.random() * type.moveDelay),
@@ -106,6 +111,10 @@ function spawnElite() {
 
     const eliteHp = type.hp * 3 + Math.floor(minutes * 2);
 
+    // Random sprite variant for elite
+    const variant = Math.floor(Math.random() * type.variants);
+    const spriteId = type.spriteId + variant;
+
     enemies.push({
         gx: cgx, gy: cgy,
         x: cgx * TILE + TILE / 2,
@@ -113,6 +122,7 @@ function spawnElite() {
         targetX: cgx * TILE + TILE / 2,
         targetY: cgy * TILE + TILE / 2,
         type: typeName,
+        spriteId: spriteId,
         hp: eliteHp,
         maxHp: eliteHp,
         moveTimer: 0,

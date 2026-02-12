@@ -19,9 +19,13 @@ const portraits = {
     dharc: null
 };
 
+// Enemy sprites (48 total)
+const enemySprites = {};
+
 let spritesLoaded = false;
 let spritesLoadedCount = 0;
 let portraitsLoadedCount = 0;
+let enemySpritesLoadedCount = 0;
 
 // Load sprite sheets
 function loadSprites() {
@@ -78,6 +82,24 @@ function loadPortraits() {
     });
 }
 
+// Load enemy sprites (48 total)
+function loadEnemySprites() {
+    for (let i = 1; i <= 48; i++) {
+        const img = new Image();
+        img.onload = () => {
+            enemySpritesLoadedCount++;
+            if (enemySpritesLoadedCount === 48) {
+                console.log('✓ All 48 enemy sprites loaded');
+            }
+        };
+        img.onerror = () => {
+            console.error(`✗ Failed to load enemy sprite: img/Enemys/Icon${i}.png`);
+        };
+        img.src = `img/Enemys/Icon${i}.png`;
+        enemySprites[i] = img;
+    }
+}
+
 // Get portrait image by character ID
 function getPortrait(charId) {
     return portraits[charId];
@@ -86,6 +108,11 @@ function getPortrait(charId) {
 // Get sprite image by name
 function getSpriteImage(name) {
     return spriteSheets[name];
+}
+
+// Get enemy sprite by ID (1-48)
+function getEnemySprite(id) {
+    return enemySprites[id] || null;
 }
 
 // LPC sprite sheet structure:
@@ -138,3 +165,4 @@ function drawSprite(ctx, spriteSheet, row, frame, x, y, scale = 1) {
 // Initialize sprite and portrait loading
 loadSprites();
 loadPortraits();
+loadEnemySprites();

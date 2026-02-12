@@ -269,68 +269,99 @@ function render() {
         ctx.ellipse(en.x, en.y + s * 0.8, s * 0.6, s * 0.2, 0, 0, Math.PI * 2);
         ctx.fill();
 
-        // Body
-        ctx.fillStyle = en.flash > 0 ? '#ffffff' : type.color;
-        ctx.shadowColor = type.color;
-        ctx.shadowBlur = en.flash > 0 ? 15 : 5;
+        // Body - SPRITE OR PROCEDURAL FALLBACK
+        const sprite = getEnemySprite(en.spriteId);
+        const size = TILE * en.size;
 
-        if (en.type === 'slime') {
-            const squish = 1 + Math.sin(gameTime * 0.08 + en.x) * 0.1;
-            ctx.beginPath();
-            ctx.ellipse(en.x, en.y + s * 0.1, s * squish, s / squish, 0, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = '#fff';
-            ctx.fillRect(en.x - s * 0.3, en.y - s * 0.15, s * 0.2, s * 0.2);
-            ctx.fillRect(en.x + s * 0.1, en.y - s * 0.15, s * 0.2, s * 0.2);
-            ctx.fillStyle = '#111';
-            ctx.fillRect(en.x - s * 0.25, en.y - s * 0.1, s * 0.1, s * 0.15);
-            ctx.fillRect(en.x + s * 0.15, en.y - s * 0.1, s * 0.1, s * 0.15);
-        } else if (en.type === 'bat') {
-            const flap = Math.sin(gameTime * 0.2 + en.x) * 0.3;
-            ctx.beginPath(); ctx.moveTo(en.x, en.y);
-            ctx.lineTo(en.x - s * 1.2, en.y - s * 0.5 + flap * s);
-            ctx.lineTo(en.x - s * 0.5, en.y + s * 0.2); ctx.closePath(); ctx.fill();
-            ctx.beginPath(); ctx.moveTo(en.x, en.y);
-            ctx.lineTo(en.x + s * 1.2, en.y - s * 0.5 - flap * s);
-            ctx.lineTo(en.x + s * 0.5, en.y + s * 0.2); ctx.closePath(); ctx.fill();
-            ctx.beginPath(); ctx.arc(en.x, en.y, s * 0.4, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = '#ff0';
-            ctx.fillRect(en.x - s * 0.2, en.y - s * 0.15, 3, 3);
-            ctx.fillRect(en.x + s * 0.05, en.y - s * 0.15, 3, 3);
-        } else if (en.type === 'skeleton') {
-            ctx.beginPath(); ctx.arc(en.x, en.y - s * 0.2, s * 0.4, 0, Math.PI * 2); ctx.fill();
-            ctx.fillRect(en.x - s * 0.15, en.y + s * 0.1, s * 0.3, s * 0.5);
-            ctx.fillStyle = '#111';
-            ctx.fillRect(en.x - s * 0.2, en.y - s * 0.3, s * 0.15, s * 0.15);
-            ctx.fillRect(en.x + s * 0.05, en.y - s * 0.3, s * 0.15, s * 0.15);
-        } else if (en.type === 'ghost') {
-            ctx.globalAlpha = 0.7;
-            const wave = Math.sin(gameTime * 0.05 + en.x) * 3;
-            ctx.beginPath();
-            ctx.arc(en.x, en.y + wave - s * 0.2, s * 0.5, Math.PI, 0);
-            ctx.lineTo(en.x + s * 0.5, en.y + s * 0.4 + wave);
-            ctx.lineTo(en.x + s * 0.25, en.y + s * 0.2 + wave);
-            ctx.lineTo(en.x, en.y + s * 0.4 + wave);
-            ctx.lineTo(en.x - s * 0.25, en.y + s * 0.2 + wave);
-            ctx.lineTo(en.x - s * 0.5, en.y + s * 0.4 + wave);
-            ctx.closePath(); ctx.fill();
+        if (sprite && sprite.complete) {
+            // SPRITE RENDERING
+            ctx.shadowBlur = 0;
+
+            // Apply effects
+            if (en.flash > 0) {
+                ctx.globalAlpha = 0.5;
+                ctx.filter = 'brightness(2)';
+            }
+            if (en.frozen > 0) {
+                ctx.filter = 'hue-rotate(180deg) brightness(1.3)';
+            }
+
+            // Draw sprite
+            ctx.drawImage(
+                sprite,
+                en.x - size / 2,
+                en.y - size / 2,
+                size,
+                size
+            );
+
+            // Reset effects
+            ctx.filter = 'none';
             ctx.globalAlpha = 1;
-            ctx.fillStyle = '#fff';
-            ctx.beginPath();
-            ctx.arc(en.x - s * 0.15, en.y - s * 0.2 + wave, s * 0.1, 0, Math.PI * 2);
-            ctx.arc(en.x + s * 0.15, en.y - s * 0.2 + wave, s * 0.1, 0, Math.PI * 2);
-            ctx.fill();
-        } else if (en.type === 'demon') {
-            ctx.beginPath(); ctx.arc(en.x, en.y, s * 0.55, 0, Math.PI * 2); ctx.fill();
-            ctx.beginPath(); ctx.moveTo(en.x - s * 0.3, en.y - s * 0.4);
-            ctx.lineTo(en.x - s * 0.5, en.y - s * 0.9); ctx.lineTo(en.x - s * 0.1, en.y - s * 0.5);
-            ctx.closePath(); ctx.fill();
-            ctx.beginPath(); ctx.moveTo(en.x + s * 0.3, en.y - s * 0.4);
-            ctx.lineTo(en.x + s * 0.5, en.y - s * 0.9); ctx.lineTo(en.x + s * 0.1, en.y - s * 0.5);
-            ctx.closePath(); ctx.fill();
-            ctx.fillStyle = '#ff0';
-            ctx.fillRect(en.x - s * 0.25, en.y - s * 0.15, s * 0.15, s * 0.1);
-            ctx.fillRect(en.x + s * 0.1, en.y - s * 0.15, s * 0.15, s * 0.1);
+        } else {
+            // PROCEDURAL FALLBACK
+            ctx.fillStyle = en.flash > 0 ? '#ffffff' : type.color;
+            ctx.shadowColor = type.color;
+            ctx.shadowBlur = en.flash > 0 ? 15 : 5;
+
+            if (en.type === 'slime') {
+                const squish = 1 + Math.sin(gameTime * 0.08 + en.x) * 0.1;
+                ctx.beginPath();
+                ctx.ellipse(en.x, en.y + s * 0.1, s * squish, s / squish, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(en.x - s * 0.3, en.y - s * 0.15, s * 0.2, s * 0.2);
+                ctx.fillRect(en.x + s * 0.1, en.y - s * 0.15, s * 0.2, s * 0.2);
+                ctx.fillStyle = '#111';
+                ctx.fillRect(en.x - s * 0.25, en.y - s * 0.1, s * 0.1, s * 0.15);
+                ctx.fillRect(en.x + s * 0.15, en.y - s * 0.1, s * 0.1, s * 0.15);
+            } else if (en.type === 'bat') {
+                const flap = Math.sin(gameTime * 0.2 + en.x) * 0.3;
+                ctx.beginPath(); ctx.moveTo(en.x, en.y);
+                ctx.lineTo(en.x - s * 1.2, en.y - s * 0.5 + flap * s);
+                ctx.lineTo(en.x - s * 0.5, en.y + s * 0.2); ctx.closePath(); ctx.fill();
+                ctx.beginPath(); ctx.moveTo(en.x, en.y);
+                ctx.lineTo(en.x + s * 1.2, en.y - s * 0.5 - flap * s);
+                ctx.lineTo(en.x + s * 0.5, en.y + s * 0.2); ctx.closePath(); ctx.fill();
+                ctx.beginPath(); ctx.arc(en.x, en.y, s * 0.4, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#ff0';
+                ctx.fillRect(en.x - s * 0.2, en.y - s * 0.15, 3, 3);
+                ctx.fillRect(en.x + s * 0.05, en.y - s * 0.15, 3, 3);
+            } else if (en.type === 'skeleton') {
+                ctx.beginPath(); ctx.arc(en.x, en.y - s * 0.2, s * 0.4, 0, Math.PI * 2); ctx.fill();
+                ctx.fillRect(en.x - s * 0.15, en.y + s * 0.1, s * 0.3, s * 0.5);
+                ctx.fillStyle = '#111';
+                ctx.fillRect(en.x - s * 0.2, en.y - s * 0.3, s * 0.15, s * 0.15);
+                ctx.fillRect(en.x + s * 0.05, en.y - s * 0.3, s * 0.15, s * 0.15);
+            } else if (en.type === 'ghost') {
+                ctx.globalAlpha = 0.7;
+                const wave = Math.sin(gameTime * 0.05 + en.x) * 3;
+                ctx.beginPath();
+                ctx.arc(en.x, en.y + wave - s * 0.2, s * 0.5, Math.PI, 0);
+                ctx.lineTo(en.x + s * 0.5, en.y + s * 0.4 + wave);
+                ctx.lineTo(en.x + s * 0.25, en.y + s * 0.2 + wave);
+                ctx.lineTo(en.x, en.y + s * 0.4 + wave);
+                ctx.lineTo(en.x - s * 0.25, en.y + s * 0.2 + wave);
+                ctx.lineTo(en.x - s * 0.5, en.y + s * 0.4 + wave);
+                ctx.closePath(); ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.fillStyle = '#fff';
+                ctx.beginPath();
+                ctx.arc(en.x - s * 0.15, en.y - s * 0.2 + wave, s * 0.1, 0, Math.PI * 2);
+                ctx.arc(en.x + s * 0.15, en.y - s * 0.2 + wave, s * 0.1, 0, Math.PI * 2);
+                ctx.fill();
+            } else if (en.type === 'demon') {
+                ctx.beginPath(); ctx.arc(en.x, en.y, s * 0.55, 0, Math.PI * 2); ctx.fill();
+                ctx.beginPath(); ctx.moveTo(en.x - s * 0.3, en.y - s * 0.4);
+                ctx.lineTo(en.x - s * 0.5, en.y - s * 0.9); ctx.lineTo(en.x - s * 0.1, en.y - s * 0.5);
+                ctx.closePath(); ctx.fill();
+                ctx.beginPath(); ctx.moveTo(en.x + s * 0.3, en.y - s * 0.4);
+                ctx.lineTo(en.x + s * 0.5, en.y - s * 0.9); ctx.lineTo(en.x + s * 0.1, en.y - s * 0.5);
+                ctx.closePath(); ctx.fill();
+                ctx.fillStyle = '#ff0';
+                ctx.fillRect(en.x - s * 0.25, en.y - s * 0.15, s * 0.15, s * 0.1);
+                ctx.fillRect(en.x + s * 0.1, en.y - s * 0.15, s * 0.15, s * 0.1);
+            }
         }
 
         ctx.shadowBlur = 0;
