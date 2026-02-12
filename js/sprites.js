@@ -12,9 +12,13 @@ let spritesLoadedCount = 0;
 
 // Load sprite sheets
 function loadSprites() {
-    const sheets = ['one', 'two', 'three'];
+    const sheets = [
+        { name: 'one', path: 'bomber/sprite.png' },
+        { name: 'two', path: 'wind/sprite.png' },
+        { name: 'three', path: 'gravity/sprite.png' }
+    ];
 
-    sheets.forEach(name => {
+    sheets.forEach(sheet => {
         const img = new Image();
         img.onload = () => {
             spritesLoadedCount++;
@@ -24,10 +28,10 @@ function loadSprites() {
             }
         };
         img.onerror = () => {
-            console.error(`✗ Failed to load sprite: ${name}_universal.png`);
+            console.error(`✗ Failed to load sprite: img/${sheet.path}`);
         };
-        img.src = `img/${name}_universal.png`;
-        spriteSheets[name] = img;
+        img.src = `img/${sheet.path}`;
+        spriteSheets[sheet.name] = img;
     });
 }
 
