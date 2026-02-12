@@ -7,7 +7,9 @@ function getElementColor(element) {
         earth: '#8B7355',
         water: '#5B9BD5',
         fire: '#FF6B3C',
-        wind: '#52C77D'
+        wind: '#52C77D',
+        light: '#FFD700',
+        dark: '#4B0082'
     };
     return colors[element] || '#2a2a2a';
 }
@@ -18,7 +20,9 @@ function getElementGlowColor(element) {
         earth: '#A0826D',
         water: '#7AC5F5',
         fire: '#FF8C3C',
-        wind: '#72E79D'
+        wind: '#72E79D',
+        light: '#FFFFCC',
+        dark: '#8B008B'
     };
     return glows[element] || '#ffcc00';
 }
@@ -29,7 +33,9 @@ function getElementRGB(element) {
         earth: { r: 160, g: 130, b: 109 },
         water: { r: 122, g: 197, b: 245 },
         fire: { r: 255, g: 140, b: 60 },
-        wind: { r: 114, g: 231, b: 157 }
+        wind: { r: 114, g: 231, b: 157 },
+        light: { r: 255, g: 215, b: 0 },
+        dark: { r: 75, g: 0, b: 130 }
     };
     return rgb[element] || { r: 255, g: 200, b: 0 };
 }
@@ -57,6 +63,18 @@ function createElementalExplosion(element, cx, cy) {
             // Spawn wind swirls
             spawnParticles(cx, cy, '#52C77D', 15, 4);
             spawnParticles(cx, cy, '#72E79D', 10, 3);
+            break;
+        case 'light':
+            // Spawn light rays and sparkles
+            spawnParticles(cx, cy, '#FFD700', 12, 6);
+            spawnParticles(cx, cy, '#FFFFCC', 8, 5);
+            spawnParticles(cx, cy, '#FFFFFF', 6, 4);
+            break;
+        case 'dark':
+            // Spawn dark mist and shadows
+            spawnParticles(cx, cy, '#4B0082', 10, 5);
+            spawnParticles(cx, cy, '#8B008B', 8, 4);
+            spawnParticles(cx, cy, '#2A0040', 6, 3);
             break;
         default:
             // Default explosion

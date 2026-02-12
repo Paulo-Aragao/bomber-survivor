@@ -434,7 +434,9 @@ canvas {
     border: 3px solid #444;
     border-radius: 16px;
     padding: 0;
+    width: 240px;
     min-width: 240px;
+    max-width: 240px;
     cursor: pointer;
     transition: all 0.3s ease;
     overflow: hidden;

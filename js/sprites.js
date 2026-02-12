@@ -5,14 +5,18 @@ const spriteSheets = {
     aussa: null,
     eria: null,
     hiita: null,
-    wynn: null
+    wynn: null,
+    lyna: null,
+    dharc: null
 };
 
 const portraits = {
     aussa: null,
     eria: null,
     hiita: null,
-    wynn: null
+    wynn: null,
+    lyna: null,
+    dharc: null
 };
 
 let spritesLoaded = false;
@@ -25,7 +29,9 @@ function loadSprites() {
         { name: 'aussa', path: 'Aussa/sprite_universal.png' },
         { name: 'eria', path: 'Eria/sprite_universal.png' },
         { name: 'hiita', path: 'Hiita/sprite_universal.png' },
-        { name: 'wynn', path: 'Wynn/sprite_universal.png' }
+        { name: 'wynn', path: 'Wynn/sprite_universal.png' },
+        { name: 'lyna', path: 'Lyna/sprite_universal.png' },
+        { name: 'dharc', path: 'Dharc/sprite_universal.png' }
     ];
 
     sheets.forEach(sheet => {
@@ -51,7 +57,9 @@ function loadPortraits() {
         { name: 'aussa', path: 'Aussa/portrait.png' },
         { name: 'eria', path: 'Eria/portrait.png' },
         { name: 'hiita', path: 'Hiita/portrait.png' },
-        { name: 'wynn', path: 'Wynn/portrait.png' }
+        { name: 'wynn', path: 'Wynn/portrait.png' },
+        { name: 'lyna', path: 'Lyna/portrait.png' },
+        { name: 'dharc', path: 'Dharc/portrait.png' }
     ];
 
     portraitPaths.forEach(p => {

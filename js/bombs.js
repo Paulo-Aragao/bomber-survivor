@@ -199,6 +199,14 @@ function handleEnemyKill(en, index) {
     addKillStreak();
     const type = ENEMY_TYPES[en.type];
 
+    // Dharc: Vampirism - heal on kill
+    if (player.vampirism > 0) {
+        const healAmt = Math.ceil(player.maxHp * player.vampirism);
+        player.hp = Math.min(player.maxHp, player.hp + healAmt);
+        spawnDamageNumber(player.x, player.y - TILE * 0.5, `+${healAmt} HP`, '#8B008B');
+        spawnParticles(player.x, player.y, '#8B008B', 8, 4);
+    }
+
     // Drop XP (or bank it)
     if (en.isElite) {
         // Elite drops chest (triggers 2-perk choice)

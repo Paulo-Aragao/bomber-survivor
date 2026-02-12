@@ -91,6 +91,51 @@ const CHARACTERS = [
             // Mecânica única: Explosões empurram inimigos para longe
             p.windPushback = true;
         }
+    },
+    {
+        id: 'lyna',
+        icon: '✨',
+        spriteSheet: 'lyna',
+        portrait: 'Lyna/portrait.png',
+        element: 'light',
+        name: 'LYNA',
+        subtitle: 'Light Charmer',
+        desc: 'Regeneração. Aura de luz. Explosões estelares.',
+        stats: '+1 HP Regen | Aura Sagrada | Estrela 8-pontas',
+        color: '#FFD700',
+        bombColor: '#FFD700',
+        explosionColor: '#FFFFCC',
+        apply: (p) => {
+            p.maxHp += 1;
+            p.hp += 1;
+            p.bombShape = 'star'; // 8 direções
+            p.element = 'light';
+            p.hpRegen = 0.05; // HP regen passivo
+            p.lightAura = true; // Aura de dano
+            p.flashBlind = 60; // Duração do atordoamento
+        }
+    },
+    {
+        id: 'dharc',
+        icon: '🌑',
+        spriteSheet: 'dharc',
+        portrait: 'Dharc/portrait.png',
+        element: 'dark',
+        name: 'DHARC',
+        subtitle: 'Dark Charmer',
+        desc: 'Vampirismo. Teleporte sombrio. Velocidade noturna.',
+        stats: 'Vampirismo 30% | Teleporte | +Velocidade (Low HP)',
+        color: '#4B0082',
+        bombColor: '#4B0082',
+        explosionColor: '#8B008B',
+        apply: (p) => {
+            p.bombShape = 'xshape'; // X diagonal
+            p.element = 'dark';
+            p.vampirism = 0.3; // 30% HP recovery on kill
+            p.shadowTeleport = true; // Pode teleportar para bombas
+            p.nightSpeed = true; // Mais rápido com low HP
+            p.maxHp -= 1; // Começa mais frágil
+        }
     }
 ];
 
@@ -133,11 +178,19 @@ function initPlayer() {
         invincibleOnLevelUp: 0,
         gravityBombs: false,
         windSpin: false,
-        animFrame: 0,
-        animTimer: 0,
         facing: 0,
         charId: 'bomber',
         charColor: '#4488ff',
+
+        // Lyna mechanics
+        hpRegen: 0,
+        lightAura: false,
+        flashBlind: 0,
+
+        // Dharc mechanics
+        vampirism: 0,
+        shadowTeleport: false,
+        nightSpeed: false,
     };
 
     // Apply character passive
