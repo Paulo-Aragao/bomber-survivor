@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir /S \"I:\\\\_HTML PROTOTIPOS\\\\bombervampire\")",
+      "Bash(dir:*)",
+      "WebFetch(domain:cdn.jsdelivr.net)"
+    ]
+  }
+}

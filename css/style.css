@@ -14,7 +14,17 @@ body {
     user-select: none;
 }
 
-canvas {
+/* ========== Phaser Game Container ========== */
+#game-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#game-container canvas {
     display: block;
     cursor: none;
 }
@@ -25,7 +35,7 @@ canvas {
     top: 0;
     left: 0;
     right: 0;
-    display: flex;
+    display: none;
     justify-content: space-between;
     align-items: flex-start;
     padding: 12px 20px;
@@ -240,7 +250,6 @@ canvas {
     transition: all 0.2s ease;
     pointer-events: all;
     position: relative;
-    /* For progress bar positioning */
 }
 
 .upgrade-card:hover,

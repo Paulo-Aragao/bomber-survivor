@@ -11,7 +11,8 @@
 </head>
 
 <body>
-    <canvas id="game"></canvas>
+    <!-- Phaser Game Container -->
+    <div id="game-container"></div>
 
     <!-- White Flash overlay (juice) -->
     <div id="white-flash"></div>
@@ -57,7 +58,7 @@
             WASD / ← → ↑ ↓ MOVER &nbsp; SPACE BOMBA &nbsp; ESC PAUSA<br>
             ← → SELECIONAR PERSONAGEM &nbsp; ENTER / HOLD SPACE (0.5s) CONFIRMAR
         </div>
-        <button class="start-btn" onclick="startGame()">ENTER / HOLD SPACE (0.5s) — START</button>
+        <button class="start-btn" id="start-btn">ENTER / HOLD SPACE (0.5s) — START</button>
     </div>
 
     <!-- Level Up Overlay -->
@@ -74,35 +75,79 @@
         <div class="gameover-stat" id="go-kills"></div>
         <div class="gameover-stat" id="go-level"></div>
         <div class="gameover-stat" id="go-highscore" style="color:#ffcc00; margin-top:6px;"></div>
-        <button class="go-btn" onclick="startGame()">ENTER / HOLD SPACE (0.5s) — RETRY</button>
+        <button class="go-btn" id="retry-btn">ENTER / HOLD SPACE (0.5s) — RETRY</button>
     </div>
 
     <!-- Pause Menu -->
     <div id="pause-overlay">
         <div id="pause-title">⏸️ PAUSED</div>
         <div id="pause-options">
-            <div class="pause-option selected" onclick="resumeGame()">▶️ RETOMAR JOGO</div>
-            <div class="pause-option" onclick="returnToCharSelect()">🔙 VOLTAR PARA SELEÇÃO</div>
+            <div class="pause-option selected">▶️ RETOMAR JOGO</div>
+            <div class="pause-option">🔙 VOLTAR PARA SELEÇÃO</div>
         </div>
         <div class="pause-hint">↑ ↓ SELECIONAR &nbsp; ENTER / HOLD SPACE (0.5s) CONFIRMAR</div>
     </div>
 
-    <!-- Scripts (order matters: dependencies first) -->
-    <script src="js/constants.js"></script>
-    <script src="js/juice.js"></script>
-    <script src="js/particles.js"></script>
-    <script src="js/sprites.js"></script>
-    <script src="js/player.js"></script>
-    <script src="js/bombs.js"></script>
-    <script src="js/enemies.js"></script>
-    <script src="js/gems.js"></script>
-    <script src="js/upgrades.js"></script>
-    <script src="js/waves.js"></script>
-    <script src="js/elemental.js"></script>
-    <script src="js/audio.js"></script>
-    <script src="js/render.js"></script>
-    <script src="js/input.js"></script>
-    <script src="js/game.js"></script>
+    <!-- Phaser 3.80 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
+
+    <!-- Data files -->
+    <script src="js/constants.js?v=2"></script>
+    <script src="js/data/characters.js?v=2"></script>
+    <script src="js/data/enemies.js?v=2"></script>
+    <script src="js/data/upgrades.js?v=2"></script>
+
+    <!-- Systems -->
+    <script src="js/systems/AudioSystem.js?v=2"></script>
+    <script src="js/systems/JuiceSystem.js?v=2"></script>
+    <script src="js/systems/ElementalSystem.js?v=2"></script>
+    <script src="js/systems/PlayerSystem.js?v=2"></script>
+    <script src="js/systems/BombSystem.js?v=2"></script>
+    <script src="js/systems/EnemySystem.js?v=2"></script>
+    <script src="js/systems/GemSystem.js?v=2"></script>
+    <script src="js/systems/WaveSystem.js?v=2"></script>
+    <script src="js/systems/UpgradeSystem.js?v=2"></script>
+
+    <!-- Scenes -->
+    <script src="js/scenes/BootScene.js?v=2"></script>
+    <script src="js/scenes/MenuScene.js?v=2"></script>
+    <script src="js/scenes/GameScene.js?v=2"></script>
+    <script src="js/scenes/HUDScene.js?v=2"></script>
+    <script src="js/scenes/LevelUpScene.js?v=2"></script>
+    <script src="js/scenes/GameOverScene.js?v=2"></script>
+
+    <!-- Main entry point -->
+    <script>
+        // Phaser config (must be here, after Phaser CDN loads)
+        const phaserConfig = {
+            type: Phaser.AUTO,
+            parent: 'game-container',
+            width: window.innerWidth,
+            height: window.innerHeight,
+            pixelArt: true,
+            backgroundColor: '#0a0a0f',
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 0 },
+                    debug: false
+                }
+            },
+            scale: {
+                mode: Phaser.Scale.RESIZE,
+                autoCenter: Phaser.Scale.CENTER_BOTH
+            },
+            scene: [BootScene, MenuScene, GameScene, HUDScene]
+        };
+
+        // Create game instance
+        const game = new Phaser.Game(phaserConfig);
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            game.scale.resize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 
 </html>
