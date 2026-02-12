@@ -3,6 +3,7 @@ const CHARACTERS = [
     {
         id: 'bomber',
         icon: '🧨',
+        spriteSheet: 'one', // one_universal.png
         name: 'BOMBER',
         desc: 'Equilibrado. Mais bombas, fuse rápido.',
         stats: '+1 Bomba | -10% Fuse',
@@ -15,6 +16,7 @@ const CHARACTERS = [
     {
         id: 'wind',
         icon: '🌪️',
+        spriteSheet: 'two', // two_universal.png
         name: 'WIND ALCHEMIST',
         desc: 'Explosão X giratória, dano dobrado.',
         stats: 'Forma X | +100% Dano | -20% Alcance',
@@ -29,6 +31,7 @@ const CHARACTERS = [
     {
         id: 'gravity',
         icon: '🧲',
+        spriteSheet: 'three', // three_universal.png
         name: 'GRAVITY NUN',
         desc: 'Bombas puxam inimigos antes de explodir.',
         stats: 'Gravity Pull | Setup & Combo',
@@ -90,6 +93,9 @@ function initPlayer() {
     const char = CHARACTERS[selectedChar];
     player.charId = char.id;
     player.charColor = char.color;
+    player.spriteSheet = char.spriteSheet; // Sprite sheet reference
+    player.spriteRow = 10; // Start facing down (South)
+    player.spriteFrame = 0; // Animation frame (0-8)
     if (char.apply) char.apply(player);
 }
 
@@ -107,12 +113,21 @@ function updatePlayer() {
     player.x = Math.max(player.w / 2, Math.min(WORLD_W - player.w / 2, player.x));
     player.y = Math.max(player.h / 2, Math.min(WORLD_H - player.h / 2, player.y));
 
-    // Walk animation
+    // Sprite direction and animation
+    if (dy < 0) { player.facing = 2; player.spriteRow = 8; } // UP
+    if (dy > 0) { player.facing = 0; player.spriteRow = 10; } // DOWN
+    if (dx < 0) { player.facing = 1; player.spriteRow = 9; } // LEFT
+    if (dx > 0) { player.facing = 3; player.spriteRow = 11; } // RIGHT
+
+    // Walk animation - cycle through 9 frames
     if (dx !== 0 || dy !== 0) {
         player.animTimer++;
-        if (player.animTimer > 8) { player.animTimer = 0; player.animFrame = (player.animFrame + 1) % 4; }
+        if (player.animTimer > 6) { // ~10 FPS animation speed
+            player.animTimer = 0;
+            player.spriteFrame = (player.spriteFrame + 1) % 9;
+        }
     } else {
-        player.animFrame = 0;
+        player.spriteFrame = 0; // Idle frame
         player.animTimer = 0;
     }
 

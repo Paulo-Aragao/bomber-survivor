@@ -351,66 +351,24 @@ function render() {
         }
     }
 
-    // -- Player --
+    // -- Player (LPC Sprite) --
     {
         const px = player.x;
         const py = player.y;
-        const pw = player.w;
-        const half = pw / 2;
 
+        // Invincibility blink effect
         if (player.invincible > 0 && Math.floor(player.invincible / 4) % 2 === 0) {
-            // Blink
+            // Skip rendering (blink)
         } else {
             // Shadow
             ctx.fillStyle = 'rgba(0,0,0,0.3)';
             ctx.beginPath();
-            ctx.ellipse(px, py + half * 0.8, half * 0.5, half * 0.15, 0, 0, Math.PI * 2);
+            ctx.ellipse(px, py + TILE * 0.4, TILE * 0.3, TILE * 0.1, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            const walkBob = (player.animFrame % 2 === 1) ? 2 : 0;
-
-            // Legs
-            ctx.fillStyle = '#2244aa';
-            if (player.animFrame % 2 === 0) {
-                ctx.fillRect(px - half * 0.4, py + half * 0.3, half * 0.35, half * 0.5);
-                ctx.fillRect(px + half * 0.1, py + half * 0.3, half * 0.35, half * 0.5);
-            } else {
-                ctx.fillRect(px - half * 0.5, py + half * 0.2, half * 0.35, half * 0.6);
-                ctx.fillRect(px + half * 0.2, py + half * 0.4, half * 0.35, half * 0.4);
-            }
-
-            // Torso (character color)
-            ctx.fillStyle = player.charColor;
-            ctx.shadowColor = player.charColor;
-            ctx.shadowBlur = 8;
-            ctx.fillRect(px - half * 0.5, py - half * 0.5 - walkBob, pw * 0.5, half * 0.9);
-
-            // Head
-            ctx.fillStyle = '#ffcc88';
-            ctx.beginPath();
-            ctx.arc(px, py - half * 0.55 - walkBob, half * 0.4, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Helmet
-            ctx.fillStyle = '#ffffff';
-            ctx.beginPath();
-            ctx.arc(px, py - half * 0.65 - walkBob, half * 0.42, Math.PI, 0);
-            ctx.fill();
-
-            // Antenna
-            ctx.fillStyle = '#ff4444';
-            ctx.beginPath();
-            ctx.arc(px, py - half * 1.0 - walkBob, half * 0.12, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Eyes
-            ctx.fillStyle = '#111';
-            const eyeOffX = player.facing === 1 ? -2 : player.facing === 3 ? 2 : 0;
-            const eyeOffY = player.facing === 0 ? 1 : player.facing === 2 ? -1 : 0;
-            ctx.fillRect(px - half * 0.2 + eyeOffX, py - half * 0.55 + eyeOffY - walkBob, 3, 3);
-            ctx.fillRect(px + half * 0.1 + eyeOffX, py - half * 0.55 + eyeOffY - walkBob, 3, 3);
-
-            ctx.shadowBlur = 0;
+            // Draw sprite
+            const spriteScale = TILE / 48; // Scale sprite to fit game (64px -> ~42px)
+            drawSprite(ctx, player.spriteSheet, player.spriteRow, player.spriteFrame, px, py, spriteScale);
         }
     }
 
