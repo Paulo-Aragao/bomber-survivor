@@ -29,25 +29,33 @@ function addKillStreak() {
     killStreakTimer = KILL_STREAK_WINDOW;
 
     if (killStreak >= 3) {
-        const display = document.getElementById('streak-display');
+        const comboEl = document.getElementById('combo-display');
         let text = '';
         if (killStreak >= 20) text = `☠️ MASSACRE ×${killStreak}!`;
         else if (killStreak >= 10) text = `🔥 UNSTOPPABLE ×${killStreak}!`;
         else if (killStreak >= 5) text = `💥 RAMPAGE ×${killStreak}!`;
         else text = `⚡ COMBO ×${killStreak}!`;
 
-        display.textContent = text;
-        display.classList.remove('active');
-        void display.offsetWidth; // force reflow
-        display.classList.add('active');
-        setTimeout(() => display.classList.remove('active'), 800);
+        if (comboEl) {
+            comboEl.textContent = text;
+            comboEl.style.display = 'block';
+        }
+
+        // Screen flash for combo
+        const intensity = Math.min(killStreak / 20, 1);
+        triggerScreenFlash(`rgba(255, 200, 0, ${0.1 + intensity * 0.15})`, 80);
     }
 }
 
 function updateKillStreak() {
     if (killStreakTimer > 0) {
         killStreakTimer--;
-        if (killStreakTimer <= 0) killStreak = 0;
+        if (killStreakTimer <= 0) {
+            killStreak = 0;
+            // Hide combo display
+            const comboEl = document.getElementById('combo-display');
+            if (comboEl) comboEl.style.display = 'none';
+        }
     }
 }
 

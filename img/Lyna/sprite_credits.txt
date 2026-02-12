@@ -34,6 +34,41 @@
   Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
               https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
 
+* Legion Skirt (pants)
+
+  Textures
+
+  Author(s) : Nila122
+              David Conway Jr. (JaidynReiman)
+              Matthew Krohn (makrohn)
+              Johannes Sjölund (wulax)
+  License(s): CC-BY-SA 3.0
+              GPL 2.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-roman-armor
+
+  Primary colors
+
+  Author(s) : Nila122
+              David Conway Jr. (JaidynReiman)
+              Matthew Krohn (makrohn)
+              Johannes Sjölund (wulax)
+  License(s): CC-BY-SA 3.0
+              GPL 2.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-roman-armor
+
+  Fixed colors
+
+  Author(s) : Nila122
+              David Conway Jr. (JaidynReiman)
+              Matthew Krohn (makrohn)
+              Johannes Sjölund (wulax)
+  License(s): CC-BY-SA 3.0
+              GPL 2.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-roman-armor
+
 * Long Boots (shoes)
 
   Textures
@@ -54,108 +89,35 @@
               GPL 3.0
   Url(s)    : https://opengameart.org/content/lpc-pregnancy-bases-maternity-wear
 
-* Plate Bracers (gloves)
+* Blouse (cravat) (shirt)
 
   Textures
 
-  Author(s) : Matthew Krohn (makrohn)
-              Johannes Sjölund (wulax)
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
-
-  Primary colors
-
-  Author(s) : Matthew Krohn (makrohn)
-              Johannes Sjölund (wulax)
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
-
-* Fancy 4 (shirt)
-
-  Textures
-
-  Author(s) : Matthew Krohn (makrohn)
+  Author(s) : Eliza Wyatt (ElizaWy)
               Lanea Zimmerman (Sharm)
+              bluecarrot16
+              pflat
   License(s): CC-BY-SA 3.0
               GPL 3.0
   Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
-              https://opengameart.org/content/lpc-dress-in-combat-poses
-
-  Primary colors
-
-  Author(s) : Eliza Wyatt (ElizaWy)
-              Joe White
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-pregnancy-bases-maternity-wear
-
-  Secondary colors
-
-  Author(s) : Eliza Wyatt (ElizaWy)
-              Joe White
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-pregnancy-bases-maternity-wear
-
-  Fixed colors
-
-  Author(s) : Eliza Wyatt (ElizaWy)
-              Joe White
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-pregnancy-bases-maternity-wear
-
-* Leather (belt)
-
-  Textures
-
-  Author(s) : bluecarrot16
-              Johannes Sjölund (wulax)
-              Matthew Krohn (makrohn)
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-combat-armor-for-women
+              https://opengameart.org/content/lpc-7-womens-shirts
               https://opengameart.org/content/lpc-pirates
 
   Primary colors
 
-  Author(s) : David Conway Jr. (JaidynReiman)
-              Johannes Sjölund (wulax)
+  Author(s) : Eliza Wyatt (ElizaWy)
+              Joe White
   License(s): CC-BY-SA 3.0
               GPL 3.0
-  Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
-              https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+  Url(s)    : https://opengameart.org/content/lpc-pregnancy-bases-maternity-wear
 
   Secondary colors
 
-  Author(s) : DarkwallLKE
-              Tuomo Untinen (reemax)
-              pflat
-  License(s): CC-BY-SA 3.0
-              GPL 2.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-items-and-game-effects
-              https://opengameart.org/content/lpc-axe
-
-* Fancy Skirt (jacket)
-
-  Textures
-
-  Author(s) : Matthew Krohn (makrohn)
-              Lanea Zimmerman (Sharm)
+  Author(s) : Eliza Wyatt (ElizaWy)
+              Joe White
   License(s): CC-BY-SA 3.0
               GPL 3.0
-  Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
-              https://opengameart.org/content/lpc-dress-in-combat-poses
-
-  Primary colors
-
-  Author(s) : Nila122
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-clothes-for-children
+  Url(s)    : https://opengameart.org/content/lpc-pregnancy-bases-maternity-wear
 
 * Human (head)
 
@@ -194,11 +156,14 @@
 
   Primary colors
 
-  Author(s) : Matthew Krohn (makrohn)
+  Author(s) : Mark Weyer
+              Johannes Sjölund (wulax)
+              Matthew Krohn (makrohn)
               Stephen Challener (Redshrike)
   License(s): CC-BY-SA 3.0
               GPL 3.0
   Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+              https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
 
 * Base (ears)
 
@@ -223,15 +188,16 @@
   Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
               https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
 
-* Pigtails 2 (hair)
+* Messy Long 1 (hair)
 
   Textures
 
-  Author(s) : Emilio J. Sanchez-Sierra
+  Author(s) : Mandi Paugh
               bluecarrot16
-  License(s): CC-BY-SA 3.0
+  License(s): GPL 2.0
               GPL 3.0
-  Url(s)    : https://opengameart.org/content/steampun-a-fy-with-concept-art
+              CC-BY 3.0
+  Url(s)    : https://opengameart.org/content/puck-overland
               https://opengameart.org/content/lpc-hair
 
   Primary colors
@@ -240,4 +206,61 @@
   License(s): CC-BY-SA 3.0
               GPL 3.0
   Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+
+* Cape (back)
+
+  Textures
+
+  Author(s) : David Conway Jr. (JaidynReiman)
+              pflat
+  License(s): CC-BY-SA 3.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-curly-hair-elven-ears-white-cape-with-blue-trim-and-more
+
+  Primary colors
+
+  Author(s) : Mandi Paugh
+              Stephen Challener (Redshrike)
+              William.Thompsonj
+  License(s): OGA-BY 3.0
+  Url(s)    : http://opengameart.org/content/sara-wizard
+              https://opengameart.org/content/lpc-sara
+
+  Secondary colors
+
+  Author(s) : DarkwallLKE
+              Charles Sanchez (CharlesGabriel)
+  License(s): CC-BY-SA 3.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+              https://opengameart.org/content/lpc-crown
+
+* Staff (mainhandalt)
+
+  Textures
+
+  Author(s) : bluecarrot16
+              pflat
+  License(s): OGA-BY 3.0+
+              GPL 3.0
+              CC-BY 4.0
+  Url(s)    : https://opengameart.org/content/lpc-more-weapons
+
+  Primary colors
+
+  Author(s) : Eliza Wyatt (ElizaWy)
+              Joe White
+  License(s): CC-BY-SA 3.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-pregnancy-bases-maternity-wear
+
+  Secondary colors
+
+  Author(s) : tskaufma
+              Johannes Sjölund (wulax)
+              pflat
+  License(s): CC-BY-SA 3.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+              https://opengameart.org/content/lpc-glow-sword
 

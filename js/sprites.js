@@ -2,20 +2,30 @@
 // Universal LPC Spritesheet loader and renderer
 
 const spriteSheets = {
-    one: null,
-    two: null,
-    three: null
+    aussa: null,
+    eria: null,
+    hiita: null,
+    wynn: null
+};
+
+const portraits = {
+    aussa: null,
+    eria: null,
+    hiita: null,
+    wynn: null
 };
 
 let spritesLoaded = false;
 let spritesLoadedCount = 0;
+let portraitsLoadedCount = 0;
 
 // Load sprite sheets
 function loadSprites() {
     const sheets = [
-        { name: 'one', path: 'bomber/sprite.png' },
-        { name: 'two', path: 'wind/sprite.png' },
-        { name: 'three', path: 'gravity/sprite.png' }
+        { name: 'aussa', path: 'Aussa/sprite_universal.png' },
+        { name: 'eria', path: 'Eria/sprite_universal.png' },
+        { name: 'hiita', path: 'Hiita/sprite_universal.png' },
+        { name: 'wynn', path: 'Wynn/sprite_universal.png' }
     ];
 
     sheets.forEach(sheet => {
@@ -24,7 +34,7 @@ function loadSprites() {
             spritesLoadedCount++;
             if (spritesLoadedCount === sheets.length) {
                 spritesLoaded = true;
-                console.log('✓ All sprite sheets loaded');
+                console.log('✓ All sprite sheets loaded (Charmers)');
             }
         };
         img.onerror = () => {
@@ -33,6 +43,36 @@ function loadSprites() {
         img.src = `img/${sheet.path}`;
         spriteSheets[sheet.name] = img;
     });
+}
+
+// Load portrait images
+function loadPortraits() {
+    const portraitPaths = [
+        { name: 'aussa', path: 'Aussa/portrait.png' },
+        { name: 'eria', path: 'Eria/portrait.png' },
+        { name: 'hiita', path: 'Hiita/portrait.png' },
+        { name: 'wynn', path: 'Wynn/portrait.png' }
+    ];
+
+    portraitPaths.forEach(p => {
+        const img = new Image();
+        img.onload = () => {
+            portraitsLoadedCount++;
+            if (portraitsLoadedCount === portraitPaths.length) {
+                console.log('✓ All portraits loaded');
+            }
+        };
+        img.onerror = () => {
+            console.error(`✗ Failed to load portrait: img/${p.path}`);
+        };
+        img.src = `img/${p.path}`;
+        portraits[p.name] = img;
+    });
+}
+
+// Get portrait image by character ID
+function getPortrait(charId) {
+    return portraits[charId];
 }
 
 // Get sprite image by name
@@ -87,5 +127,6 @@ function drawSprite(ctx, spriteSheet, row, frame, x, y, scale = 1) {
     );
 }
 
-// Initialize sprite loading
+// Initialize sprite and portrait loading
 loadSprites();
+loadPortraits();

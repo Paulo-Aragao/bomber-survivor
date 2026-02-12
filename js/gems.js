@@ -77,6 +77,9 @@ function updateGems() {
             spawnParticles(g.x, g.y, g.mega ? '#ffcc00' : '#44aaff', g.mega ? 8 : 4, 3);
             gems.splice(i, 1);
 
+            // Play XP collect sound
+            playXPCollectSound();
+
             // Level up check
             while (player.xp >= player.xpNeeded) {
                 player.xp -= player.xpNeeded;
@@ -86,6 +89,9 @@ function updateGems() {
                     player.invincible = Math.max(player.invincible, player.invincibleOnLevelUp);
                     spawnParticles(player.x, player.y, '#ffff00', 10, 5);
                 }
+
+                // Play level up sound
+                playLevelUpSound();
                 showLevelUp();
                 break; // show one level up at a time
             }

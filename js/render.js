@@ -135,7 +135,7 @@ function render() {
         ctx.shadowBlur = 0;
     }
 
-    // -- Explosions (enhanced with shockwave) --
+    // -- Explosions (Elemental Enhanced) --
     for (const e of explosions) {
         // Offscreen cull
         const ex = e.gx * TILE;
@@ -145,21 +145,25 @@ function render() {
         const progress = 1 - e.timer / 30;
         const alpha = e.timer / 30;
 
-        // Radial gradient explosion
+        // Get elemental colors
+        const rgb = e.element ? getElementRGB(e.element) : { r: 255, g: 180, b: 50 };
+        const glowColor = e.element ? getElementGlowColor(e.element) : '#ffaa00';
+
+        // Radial gradient explosion (elemental colors)
         const cx = ex + TILE / 2;
         const cy = ey + TILE / 2;
         const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, TILE * 0.7);
-        grad.addColorStop(0, `rgba(255, 255, 200, ${alpha * 0.9})`);
-        grad.addColorStop(0.3, `rgba(255, 180, 50, ${alpha * 0.7})`);
-        grad.addColorStop(0.7, `rgba(255, 80, 0, ${alpha * 0.4})`);
-        grad.addColorStop(1, `rgba(255, 40, 0, 0)`);
+        grad.addColorStop(0, `rgba(255, 255, 255, ${alpha * 0.9})`);
+        grad.addColorStop(0.3, `rgba(${rgb.r}, ${Math.floor(rgb.g * 1.2)}, ${rgb.b}, ${alpha * 0.7})`);
+        grad.addColorStop(0.7, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha * 0.4})`);
+        grad.addColorStop(1, `rgba(${Math.floor(rgb.r * 0.8)}, ${Math.floor(rgb.g * 0.8)}, ${Math.floor(rgb.b * 0.8)}, 0)`);
         ctx.fillStyle = grad;
         ctx.fillRect(ex - TILE * 0.2, ey - TILE * 0.2, TILE * 1.4, TILE * 1.4);
 
-        // Shockwave ring
+        // Shockwave ring (elemental color)
         if (e.timer > 20 && e.isCenter) {
             const ring = 1 + progress * 2;
-            ctx.strokeStyle = `rgba(255, 200, 100, ${alpha * 0.5})`;
+            ctx.strokeStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha * 0.5})`;
             ctx.lineWidth = 3 - progress * 2;
             ctx.beginPath();
             ctx.arc(cx, cy, TILE * ring * 0.3, 0, Math.PI * 2);
@@ -167,14 +171,13 @@ function render() {
             ctx.lineWidth = 1;
         }
 
-        // Sparks on first frame
-        if (e.timer === 29) {
-            spawnParticles(cx, cy, '#ff8800', 4, 4);
-            spawnParticles(cx, cy, '#ffcc44', 2, 3);
+        // Spawn elemental particles on first frame
+        if (e.timer === 29 && e.element) {
+            createElementalExplosion(e.element, cx, cy);
         }
     }
 
-    // -- Bombs --
+    // -- Bombs (Elemental) --
     for (const b of bombs) {
         const x = b.gx * TILE + TILE / 2;
         const y = b.gy * TILE + TILE / 2;
@@ -182,18 +185,29 @@ function render() {
         const isUrgent = (b.timer / b.maxTimer) < 0.25;
         const urgencyScale = isUrgent ? 1 + Math.sin(b.pulseAnim * 3) * 0.15 : 0;
 
+        // Get elemental colors
+        const bombColor = b.element ? getElementColor(b.element) : '#2a2a2a';
+        const glowColor = b.element ? getElementGlowColor(b.element) : '#ffcc00';
+
         // Shadow
         ctx.fillStyle = 'rgba(0,0,0,0.4)';
         ctx.beginPath();
         ctx.ellipse(x, y + TILE * 0.3, TILE * 0.25, TILE * 0.1, 0, 0, Math.PI * 2);
         ctx.fill();
 
-        // Body
+        // Body (elemental colored)
         const bombSize = TILE * 0.35 * pulse;
-        ctx.fillStyle = isUrgent ? `rgb(${180 + urgencyScale * 75}, 40, 40)` : '#2a2a2a';
+        if (isUrgent) {
+            ctx.fillStyle = glowColor;
+        } else {
+            ctx.fillStyle = bombColor;
+        }
+        ctx.shadowColor = glowColor;
+        ctx.shadowBlur = 10;
         ctx.beginPath();
         ctx.arc(x, y, bombSize, 0, Math.PI * 2);
         ctx.fill();
+        ctx.shadowBlur = 0;
 
         // Highlight
         ctx.fillStyle = 'rgba(255,255,255,0.2)';
@@ -201,20 +215,20 @@ function render() {
         ctx.arc(x - bombSize * 0.25, y - bombSize * 0.25, bombSize * 0.3, 0, Math.PI * 2);
         ctx.fill();
 
-        // Fuse spark
+        // Fuse spark (elemental)
         const sparkX = x + Math.cos(b.pulseAnim * 2) * 3;
         const sparkY = y - bombSize - 2 + Math.sin(b.pulseAnim * 3) * 2;
-        ctx.fillStyle = isUrgent ? '#ff4400' : '#ffcc00';
-        ctx.shadowColor = isUrgent ? '#ff4400' : '#ffcc00';
-        ctx.shadowBlur = 10;
+        ctx.fillStyle = glowColor;
+        ctx.shadowColor = glowColor;
+        ctx.shadowBlur = 15;
         ctx.beginPath();
         ctx.arc(sparkX, sparkY, 3 + (isUrgent ? 2 : 0), 0, Math.PI * 2);
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        // Timer ring
+        // Timer ring (elemental color)
         const timerProgress = b.timer / b.maxTimer;
-        ctx.strokeStyle = `rgba(255, ${Math.floor(200 * timerProgress)}, 0, 0.7)`;
+        ctx.strokeStyle = glowColor;
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.arc(x, y, bombSize + 4, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * timerProgress);

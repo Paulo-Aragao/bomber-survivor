@@ -18,10 +18,12 @@
 
   Author(s) : Stephen Challener (Redshrike)
               Johannes Sjölund (wulax)
+              Matthew Krohn (makrohn)
   License(s): CC-BY-SA 3.0
               GPL 3.0
   Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
               https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+              https://opengameart.org/content/lpc-ladies
 
   Primary colors
 
@@ -32,18 +34,52 @@
   Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
               https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
 
-* Loose (pants)
+* Legion Skirt (pants)
 
   Textures
 
   Author(s) : Nila122
+              David Conway Jr. (JaidynReiman)
+              Matthew Krohn (makrohn)
               Johannes Sjölund (wulax)
-              Stephen Challener (Redshrike)
   License(s): CC-BY-SA 3.0
               GPL 2.0
               GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-pirates
-              https://opengameart.org/content/more-lpc-clothes-and-hair
+  Url(s)    : https://opengameart.org/content/lpc-roman-armor
+
+  Primary colors
+
+  Author(s) : Nila122
+              David Conway Jr. (JaidynReiman)
+              Matthew Krohn (makrohn)
+              Johannes Sjölund (wulax)
+  License(s): CC-BY-SA 3.0
+              GPL 2.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-roman-armor
+
+  Fixed colors
+
+  Author(s) : Nila122
+              David Conway Jr. (JaidynReiman)
+              Matthew Krohn (makrohn)
+              Johannes Sjölund (wulax)
+  License(s): CC-BY-SA 3.0
+              GPL 2.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-roman-armor
+
+* Rimmed Boots (shoes)
+
+  Textures
+
+  Author(s) : David Conway Jr. (JaidynReiman)
+  License(s): OGA-BY 3.0
+              OGA-BY 4.0
+              CC-BY 3.0
+              CC-BY 4.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-relm-outfit-pieces-2-kimonos-2-sleeves-2-boots-tabi-socks-updated-4924
 
   Primary colors
 
@@ -53,60 +89,18 @@
               GPL 3.0
   Url(s)    : https://opengameart.org/content/lpc-pregnancy-bases-maternity-wear
 
-* Long Boots (shoes)
+* Leather 1 (shirt)
 
   Textures
 
-  Author(s) : bluecarrot16
-              Nila122
-  License(s): CC-BY-SA 3.0
-              GPL 2.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-clothes-and-hair
-              https://opengameart.org/content/lpc-santa
-              http://opengameart.org/content/lpc-clothing-updates
-
-  Primary colors
-
-  Author(s) : Eliza Wyatt (ElizaWy)
-              Joe White
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-pregnancy-bases-maternity-wear
-
-* Formal (shirt)
-
-  Textures
-
-  Author(s) : bluecarrot16
-              Thane Brimhall (pennomi)
-              laetissima
-              Johannes Sjölund (wulax)
+  Author(s) : Johannes Sjölund (wulax)
+              Matthew Krohn (makrohn)
+              David Conway Jr. (JaidynReiman)
+              Marcel van de Steeg (MadMarcel)
   License(s): CC-BY-SA 3.0
               GPL 3.0
   Url(s)    : https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
-              https://opengameart.org/content/lpc-2-characters
-              https://opengameart.org/content/lpc-gentleman
-
-  Primary colors
-
-  Author(s) : bluecarrot16
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-gentleman
-
-* Raised (belt)
-
-  Textures
-
-  Author(s) : bluecarrot16
-              Johannes Sjölund (wulax)
-              Matthew Krohn (makrohn)
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-combat-armor-for-women
-              https://opengameart.org/content/lpc-pirates
-              https://opengameart.org/content/lpc-santa
+              https://opengameart.org/content/lpc-combat-armor-for-women
 
   Primary colors
 
@@ -126,16 +120,25 @@
   Url(s)    : https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
               https://opengameart.org/content/lpc-combat-armor-for-women
 
+  Fixed colors
+
+  Author(s) : Johannes Sjölund (wulax)
+  License(s): CC-BY-SA 3.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+
 * Human (head)
 
   Textures
 
   Author(s) : Stephen Challener (Redshrike)
               Johannes Sjölund (wulax)
+              Matthew Krohn (makrohn)
   License(s): CC-BY-SA 3.0
               GPL 3.0
   Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
               https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+              https://opengameart.org/content/lpc-ladies
 
   Primary colors
 
@@ -152,10 +155,12 @@
 
   Author(s) : Stephen Challener (Redshrike)
               Johannes Sjölund (wulax)
+              Matthew Krohn (makrohn)
   License(s): CC-BY-SA 3.0
               GPL 3.0
   Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
               https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+              https://opengameart.org/content/lpc-ladies
 
   Primary colors
 
@@ -171,11 +176,13 @@
 
   Author(s) : Stephen Challener (Redshrike)
               Johannes Sjölund (wulax)
+              Matthew Krohn (makrohn)
               pflat
   License(s): CC-BY-SA 3.0
               GPL 3.0
   Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
               https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+              https://opengameart.org/content/lpc-ladies
 
   Primary colors
 
@@ -186,75 +193,95 @@
   Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
               https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
 
-* Bedhead (hair)
-
-  Textures
-
-  Author(s) : Manuel Riecke (MrBeast)
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
-
-  Primary colors
-
-  Author(s) : Manuel Riecke (MrBeast)
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
-
-* Left Braid (hairadd)
+* Relm Ponytail (hair)
 
   Textures
 
   Author(s) : David Conway Jr. (JaidynReiman)
-  License(s): CC-BY-SA 3.0
-              CC-BY 3.0
+              pflat
+  License(s): CC-BY 3.0
               CC-BY 4.0
+              OGA-BY 3.0
+              OGA-BY 4.0
               GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-1-hairstyle-2-hair-extensions-3-previously-unofficially-released-hairstyles
+  Url(s)    : https://opengameart.org/content/lpc-update-now-animated-relm-hairstyle-pieces-xlong-ponytail-bangs-and-braids-headband
 
   Primary colors
 
-  Author(s) : Manuel Riecke (MrBeast)
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
-
-* Jetpack (back)
-
-  Textures
-
-  Author(s) : Benjamin K. Smith (BenCreating)
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-backpacks
-
-  Primary colors
-
-  Author(s) : Michael Whitlock (bigbeargames)
-              Matthew Krohn (makrohn)
-              Johannes Sjölund (wulax)
-  License(s): CC-BY-SA 3.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
-              https://opengameart.org/content/lpc-combat-armor-for-women
+  Author(s) : thecilekli
+  License(s): CC0
+  Url(s)    : https://opengameart.org/content/lpc-korean-idol-hairstyle-male-with-12-colors
 
   Secondary colors
-
-  Author(s) : DarkwallLKE
-              Tuomo Untinen (reemax)
-              pflat
-  License(s): CC-BY-SA 3.0
-              GPL 2.0
-              GPL 3.0
-  Url(s)    : https://opengameart.org/content/lpc-items-and-game-effects
-              https://opengameart.org/content/lpc-axe
-
-  Fixed colors
 
   Author(s) : Eliza Wyatt (ElizaWy)
               Joe White
   License(s): CC-BY-SA 3.0
               GPL 3.0
   Url(s)    : https://opengameart.org/content/lpc-pregnancy-bases-maternity-wear
+
+  Fixed colors
+
+  Author(s) : tskaufma
+              Johannes Sjölund (wulax)
+  License(s): CC-BY-SA 3.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+              https://opengameart.org/content/lpc-glow-sword
+
+* Cape (back)
+
+  Textures
+
+  Author(s) : David Conway Jr. (JaidynReiman)
+              pflat
+  License(s): CC-BY-SA 3.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-curly-hair-elven-ears-white-cape-with-blue-trim-and-more
+
+  Primary colors
+
+  Author(s) : Eliza Wyatt (ElizaWy)
+              Joe White
+  License(s): CC-BY-SA 3.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-pregnancy-bases-maternity-wear
+
+  Secondary colors
+
+  Author(s) : DarkwallLKE
+              Charles Sanchez (CharlesGabriel)
+  License(s): CC-BY-SA 3.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+              https://opengameart.org/content/lpc-crown
+
+* Staff (mainhandalt)
+
+  Textures
+
+  Author(s) : bluecarrot16
+              pflat
+  License(s): OGA-BY 3.0+
+              GPL 3.0
+              CC-BY 4.0
+  Url(s)    : https://opengameart.org/content/lpc-more-weapons
+
+  Primary colors
+
+  Author(s) : Eliza Wyatt (ElizaWy)
+              Joe White
+  License(s): CC-BY-SA 3.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-pregnancy-bases-maternity-wear
+
+  Secondary colors
+
+  Author(s) : tskaufma
+              Johannes Sjölund (wulax)
+              pflat
+  License(s): CC-BY-SA 3.0
+              GPL 3.0
+  Url(s)    : https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+              https://opengameart.org/content/lpc-glow-sword
 

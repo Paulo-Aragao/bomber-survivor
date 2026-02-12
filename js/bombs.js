@@ -4,11 +4,13 @@ let explosions = [];
 
 function placeBomb() {
     if (player.bombCooldown > 0) return;
-    if (bombs.length >= player.bombMax) return;
+    if (bombs.filter(b => !b.exploded).length >= player.bombMax) return;
 
     const gx = Math.floor(player.x / TILE);
     const gy = Math.floor(player.y / TILE);
-    if (bombs.some(b => b.gx === gx && b.gy === gy)) return;
+
+    const existing = bombs.find(b => b.gx === gx && b.gy === gy && !b.exploded);
+    if (existing) return;
 
     bombs.push({
         gx, gy,
@@ -16,13 +18,16 @@ function placeBomb() {
         maxTimer: player.bombTimer,
         range: player.bombRange,
         shape: player.bombShape,
+        gravity: player.gravityBombs || false,
+        exploded: false,
         pulseAnim: 0,
-        gravity: player.gravityBombs,
-        windSpin: player.windSpin,
-        spinAngle: 0,
+        element: player.element || null // Elemento do personagem
     });
 
     player.bombCooldown = player.bombCooldownMax;
+
+    // Play elemental bomb place sound
+    playBombPlaceSound(player.element);
 }
 
 function getExplosionTiles(cx, cy, range, shape) {
@@ -69,6 +74,7 @@ function explodeBomb(bomb) {
             gx: t.gx, gy: t.gy,
             timer: 30,
             isCenter: (t.gx === bomb.gx && t.gy === bomb.gy),
+            element: bomb.element || null // Pass element to explosion
         });
     }
     screenShake = 14;
@@ -76,6 +82,9 @@ function explodeBomb(bomb) {
     // Juice: white flash + hit stop on explosion
     triggerWhiteFlash();
     triggerHitStop(3); // ~50ms
+
+    // Play elemental explosion sound
+    playExplosionSound(bomb.element);
 }
 
 function updateBombs() {
@@ -171,6 +180,10 @@ function updateExplosions() {
                         damageFlash = 15;
                         screenShake = 10;
                         spawnDamageNumber(player.x, player.y - TILE * 0.5, 'OUCH!', '#ff4444');
+
+                        // Play hit sound
+                        playHitSound();
+
                         if (player.hp <= 0) { gameOver(); return; }
                     }
                 }

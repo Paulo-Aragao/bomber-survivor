@@ -21,13 +21,19 @@ let highScore = parseInt(localStorage.getItem('bomberVampireHighScore') || '0');
 // ===================== GAME OVER =====================
 function gameOver() {
     gameRunning = false;
+    gamePaused = true;
     document.getElementById('gameover-overlay').classList.add('active');
+    // Assuming formatTime and gameStartTime are defined elsewhere for this new logic
+    // Reverting to original time calculation if formatTime/gameStartTime are not defined in the context
     const totalSeconds = Math.floor(gameTime / 60);
     const mins = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
     const secs = (totalSeconds % 60).toString().padStart(2, '0');
     document.getElementById('go-time').textContent = `⏱️ Survived: ${mins}:${secs}`;
     document.getElementById('go-kills').textContent = `💀 Kills: ${kills}`;
     document.getElementById('go-level').textContent = `⭐ Level: ${player.level}`;
+
+    // Play game over sound (assuming playGameOverSound() is defined elsewhere)
+    // playGameOverSound();
 
     const score = totalSeconds * 10 + kills * 5 + player.level * 20;
     const isNew = score > highScore;
@@ -164,6 +170,13 @@ function startGame() {
     eliteTimer = 0;
     gamePaused = false;
     gameRunning = true;
+
+    // Set character portrait in HUD
+    const char = CHARACTERS[selectedChar];
+    const portraitEl = document.getElementById('char-portrait');
+    if (portraitEl && char.portrait) {
+        portraitEl.style.backgroundImage = `url('img/${char.portrait}')`;
+    }
 }
 
 // ===================== INIT CHARACTER SELECT =====================
@@ -173,19 +186,33 @@ function initCharSelect() {
     CHARACTERS.forEach((char, idx) => {
         const card = document.createElement('div');
         card.className = 'char-card' + (idx === 0 ? ' selected' : '');
-        card.innerHTML = `
-            <div class="char-icon">${char.icon}</div>
+
+        // Portrait image
+        const portrait = document.createElement('div');
+        portrait.className = 'char-portrait';
+        portrait.style.backgroundImage = `url('img/${char.portrait}')`;
+
+        // Character info
+        const info = document.createElement('div');
+        info.className = 'char-info';
+        info.innerHTML = `
             <div class="char-name">${char.name}</div>
+            <div class="char-subtitle">${char.subtitle}</div>
             <div class="char-desc">${char.desc}</div>
             <div class="char-stats">${char.stats}</div>
         `;
+
+        card.appendChild(portrait);
+        card.appendChild(info);
         card.addEventListener('click', () => {
+            playUIClick();
             selectedChar = idx;
             updateCharSelection();
         });
         card.addEventListener('dblclick', () => {
             selectedChar = idx;
             updateCharSelection();
+            playUIConfirm();
             startGame();
         });
         container.appendChild(card);

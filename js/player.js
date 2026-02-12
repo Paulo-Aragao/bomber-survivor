@@ -1,44 +1,95 @@
 // ===================== CHARACTERS =====================
 const CHARACTERS = [
     {
-        id: 'bomber',
-        icon: '🧨',
-        spriteSheet: 'one', // one_universal.png
-        name: 'BOMBER',
-        desc: 'Equilibrado. Mais bombas, fuse rápido.',
-        stats: '+1 Bomba | -10% Fuse',
-        color: '#4488ff',
+        id: 'aussa',
+        icon: '🌿',
+        spriteSheet: 'aussa',
+        portrait: 'Aussa/portrait.png',
+        element: 'earth',
+        name: 'AUSSA',
+        subtitle: 'Earth Charmer',
+        desc: 'Cria rochas ao explodir. Terremotos atordoam.',
+        stats: '+2 HP | +1 Armadura | Explosões Rochosas',
+        color: '#8B7355',
+        bombColor: '#8B7355',
+        explosionColor: '#A0826D',
         apply: (p) => {
-            p.bombMax = 2;
-            p.bombTimer = Math.floor(p.bombTimer * 0.9);
+            p.maxHp += 2;
+            p.hp += 2;
+            p.armor += 1;
+            p.bombShape = 'cross';
+            p.bombRange += 1;
+            p.element = 'earth';
+            // Mecânica única: Explosões deixam rochas temporárias que bloqueiam
+            p.earthRocks = true;
         }
     },
     {
-        id: 'wind',
+        id: 'eria',
+        icon: '💧',
+        spriteSheet: 'eria',
+        portrait: 'Eria/portrait.png',
+        element: 'water',
+        name: 'ERIA',
+        subtitle: 'Water Charmer',
+        desc: 'Congela inimigos. Explosões onduladas.',
+        stats: '70% Congelar | Ondas d\'Água | +Velocidade',
+        color: '#5B9BD5',
+        bombColor: '#5B9BD5',
+        explosionColor: '#7AC5F5',
+        apply: (p) => {
+            p.freezeChance = 0.7;
+            p.bombShape = 'circle';
+            p.speed += 0.5;
+            p.element = 'water';
+            // Mecânica única: Explosões deixam poças que desaceleram inimigos
+            p.waterPuddles = true;
+        }
+    },
+    {
+        id: 'hiita',
+        icon: '🔥',
+        spriteSheet: 'hiita',
+        portrait: 'Hiita/portrait.png',
+        element: 'fire',
+        name: 'HIITA',
+        subtitle: 'Fire Charmer',
+        desc: 'Queima tudo. Explosões em cadeia.',
+        stats: '+3 Queimar | Pavio Curto | Trilhas de Fogo',
+        color: '#E74C3C',
+        bombColor: '#FF6B3C',
+        explosionColor: '#FF8C3C',
+        apply: (p) => {
+            p.burnDamage += 3;
+            p.bombCooldownMax = Math.floor(p.bombCooldownMax * 0.6);
+            p.bombTimer = Math.floor(p.bombTimer * 0.65);
+            p.piercing += 2;
+            p.element = 'fire';
+            // Mecânica única: Explosões deixam trilhas de fogo
+            p.fireTrails = true;
+        }
+    },
+    {
+        id: 'wynn',
         icon: '🌪️',
-        spriteSheet: 'two', // two_universal.png
-        name: 'WIND ALCHEMIST',
-        desc: 'Explosão X giratória, dano dobrado.',
-        stats: 'Forma X | +100% Dano | -20% Alcance',
-        color: '#44ddaa',
+        spriteSheet: 'wynn',
+        portrait: 'Wynn/portrait.png',
+        element: 'wind',
+        name: 'WYNN',
+        subtitle: 'Wind Charmer',
+        desc: 'Ventania empurra inimigos. Ultra rápida.',
+        stats: '+100% Velocidade | Empurrão | Magnetismo',
+        color: '#52C77D',
+        bombColor: '#52C77D',
+        explosionColor: '#72E79D',
         apply: (p) => {
+            p.speed += 2.0;
             p.bombShape = 'xshape';
-            p.piercing += 1;
-            p.bombRange = Math.max(1, p.bombRange - 1);
+            p.magnetRange += 4;
             p.windSpin = true;
-        }
-    },
-    {
-        id: 'gravity',
-        icon: '🧲',
-        spriteSheet: 'three', // three_universal.png
-        name: 'GRAVITY NUN',
-        desc: 'Bombas puxam inimigos antes de explodir.',
-        stats: 'Gravity Pull | Setup & Combo',
-        color: '#aa44ff',
-        apply: (p) => {
-            p.gravityBombs = true;
-            p.bombTimer = Math.floor(p.bombTimer * 1.15);
+            p.element = 'wind';
+            // Mecânica única: Explosões empurram inimigos para longe
+            p.windPushback = true;
         }
     }
 ];

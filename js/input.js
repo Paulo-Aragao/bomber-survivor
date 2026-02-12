@@ -20,13 +20,16 @@ window.addEventListener('keydown', e => {
         if (e.code === 'ArrowLeft' || e.code === 'KeyA') {
             selectedChar = (selectedChar - 1 + CHARACTERS.length) % CHARACTERS.length;
             updateCharSelection();
+            playUINavigate();
         } else if (e.code === 'ArrowRight' || e.code === 'KeyD') {
             selectedChar = (selectedChar + 1) % CHARACTERS.length;
             updateCharSelection();
+            playUINavigate();
         }
         // Only ENTER to confirm (Space hold handled in update loop)
         if (e.code === 'Enter') {
             startGame();
+            playUIConfirm();
         }
         return;
     }
@@ -37,6 +40,7 @@ window.addEventListener('keydown', e => {
         // Only ENTER to confirm (Space hold handled in update loop)
         if (e.code === 'Enter') {
             startGame();
+            playUIConfirm();
         }
         return;
     }
@@ -47,13 +51,16 @@ window.addEventListener('keydown', e => {
         if (e.code === 'ArrowUp' || e.code === 'KeyW') {
             selectedPauseOption = 0;
             updatePauseSelection();
+            playUINavigate();
         } else if (e.code === 'ArrowDown' || e.code === 'KeyS') {
             selectedPauseOption = 1;
             updatePauseSelection();
+            playUINavigate();
         }
         // Only ENTER to confirm (Space hold handled in update loop)
         if (e.code === 'Enter') {
             confirmPauseOption();
+            playUIConfirm();
         }
         return;
     }
@@ -61,6 +68,7 @@ window.addEventListener('keydown', e => {
     // ESC to pause during game
     if (e.code === 'Escape' && gameRunning && !gamePaused) {
         pauseGame();
+        playUIConfirm(); // Assuming pause is a confirmation
         return;
     }
 
@@ -72,13 +80,16 @@ window.addEventListener('keydown', e => {
         if (e.code === 'ArrowLeft' || e.code === 'KeyA') {
             selectedUpgrade = (selectedUpgrade - 1 + currentUpgradeChoices.length) % currentUpgradeChoices.length;
             updateUpgradeSelection();
+            playUINavigate();
         } else if (e.code === 'ArrowRight' || e.code === 'KeyD') {
             selectedUpgrade = (selectedUpgrade + 1) % currentUpgradeChoices.length;
             updateUpgradeSelection();
+            playUINavigate();
         }
         // Only ENTER to confirm (Space hold handled in update loop)
         if (e.code === 'Enter') {
             confirmUpgrade();
+            playUIConfirm();
         }
     }
 });
@@ -152,6 +163,39 @@ function updateCharSelection() {
     const cards = document.querySelectorAll('.char-card');
     cards.forEach((card, i) => {
         card.classList.toggle('selected', i === selectedChar);
+    });
+}
+
+function initCharSelection() {
+    const container = document.getElementById('char-select');
+    container.innerHTML = '';
+
+    CHARACTERS.forEach((char, idx) => {
+        const card = document.createElement('div');
+        card.className = 'char-card' + (idx === 0 ? ' selected' : '');
+
+        // Portrait image
+        const portrait = document.createElement('div');
+        portrait.className = 'char-portrait';
+        portrait.style.backgroundImage = `url('img/${char.portrait}')`;
+
+        // Character info
+        const info = document.createElement('div');
+        info.className = 'char-info';
+        info.innerHTML = `
+            <div class="char-name">${char.name}</div>
+            <div class="char-subtitle">${char.subtitle}</div>
+            <div class="char-desc">${char.desc}</div>
+            <div class="char-stats">${char.stats}</div>
+        `;
+
+        card.appendChild(portrait);
+        card.appendChild(info);
+        card.addEventListener('click', () => {
+            selectedChar = idx;
+            updateCharSelection();
+        });
+        container.appendChild(card);
     });
 }
 
