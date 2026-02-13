@@ -91,62 +91,75 @@
     <!-- Phaser 3.80 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
 
-    <!-- Data files -->
-    <script src="js/constants.js?v=2"></script>
-    <script src="js/data/characters.js?v=2"></script>
-    <script src="js/data/enemies.js?v=2"></script>
-    <script src="js/data/upgrades.js?v=2"></script>
+    <!-- Config Loader (must load before data files) -->
+    <script src="js/data/ConfigLoader.js?v=3"></script>
+
+    <!-- Data files (fallback defaults, overwritten by ConfigLoader) -->
+    <script src="js/constants.js?v=3"></script>
+    <script src="js/data/characters.js?v=3"></script>
+    <script src="js/data/enemies.js?v=3"></script>
+    <script src="js/data/upgrades.js?v=3"></script>
 
     <!-- Systems -->
-    <script src="js/systems/AudioSystem.js?v=2"></script>
-    <script src="js/systems/JuiceSystem.js?v=2"></script>
-    <script src="js/systems/ElementalSystem.js?v=2"></script>
-    <script src="js/systems/PlayerSystem.js?v=2"></script>
-    <script src="js/systems/BombSystem.js?v=2"></script>
-    <script src="js/systems/EnemySystem.js?v=2"></script>
-    <script src="js/systems/GemSystem.js?v=2"></script>
-    <script src="js/systems/WaveSystem.js?v=2"></script>
-    <script src="js/systems/UpgradeSystem.js?v=2"></script>
+    <script src="js/systems/AudioSystem.js?v=3"></script>
+    <script src="js/systems/JuiceSystem.js?v=3"></script>
+    <script src="js/systems/ElementalSystem.js?v=3"></script>
+    <script src="js/systems/PlayerSystem.js?v=3"></script>
+    <script src="js/systems/BombSystem.js?v=3"></script>
+    <script src="js/systems/EnemySystem.js?v=3"></script>
+    <script src="js/systems/GemSystem.js?v=3"></script>
+    <script src="js/systems/WaveSystem.js?v=3"></script>
+    <script src="js/systems/UpgradeSystem.js?v=3"></script>
 
     <!-- Scenes -->
-    <script src="js/scenes/BootScene.js?v=2"></script>
-    <script src="js/scenes/MenuScene.js?v=2"></script>
-    <script src="js/scenes/GameScene.js?v=2"></script>
-    <script src="js/scenes/HUDScene.js?v=2"></script>
-    <script src="js/scenes/LevelUpScene.js?v=2"></script>
-    <script src="js/scenes/GameOverScene.js?v=2"></script>
+    <script src="js/scenes/BootScene.js?v=3"></script>
+    <script src="js/scenes/MenuScene.js?v=3"></script>
+    <script src="js/scenes/GameScene.js?v=3"></script>
+    <script src="js/scenes/HUDScene.js?v=3"></script>
+    <script src="js/scenes/LevelUpScene.js?v=3"></script>
+    <script src="js/scenes/GameOverScene.js?v=3"></script>
 
     <!-- Main entry point -->
     <script>
-        // Phaser config (must be here, after Phaser CDN loads)
-        const phaserConfig = {
-            type: Phaser.AUTO,
-            parent: 'game-container',
-            width: window.innerWidth,
-            height: window.innerHeight,
-            pixelArt: true,
-            backgroundColor: '#0a0a0f',
-            physics: {
-                default: 'arcade',
-                arcade: {
-                    gravity: { y: 0 },
-                    debug: false
-                }
-            },
-            scale: {
-                mode: Phaser.Scale.RESIZE,
-                autoCenter: Phaser.Scale.CENTER_BOTH
-            },
-            scene: [BootScene, MenuScene, GameScene, HUDScene]
-        };
+        // Load JSON configs, then create game
+        (async function() {
+            try {
+                await ConfigLoader.load();
+                console.log('[ConfigLoader] All configs loaded successfully', CONFIG);
+            } catch (err) {
+                console.warn('[ConfigLoader] Failed to load configs, using fallback defaults:', err);
+            }
 
-        // Create game instance
-        const game = new Phaser.Game(phaserConfig);
+            // Phaser config (must be here, after Phaser CDN loads)
+            const phaserConfig = {
+                type: Phaser.AUTO,
+                parent: 'game-container',
+                width: window.innerWidth,
+                height: window.innerHeight,
+                pixelArt: true,
+                backgroundColor: '#0a0a0f',
+                physics: {
+                    default: 'arcade',
+                    arcade: {
+                        gravity: { y: 0 },
+                        debug: false
+                    }
+                },
+                scale: {
+                    mode: Phaser.Scale.RESIZE,
+                    autoCenter: Phaser.Scale.CENTER_BOTH
+                },
+                scene: [BootScene, MenuScene, GameScene, HUDScene]
+            };
 
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            game.scale.resize(window.innerWidth, window.innerHeight);
-        });
+            // Create game instance
+            const game = new Phaser.Game(phaserConfig);
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                game.scale.resize(window.innerWidth, window.innerHeight);
+            });
+        })();
     </script>
 </body>
 

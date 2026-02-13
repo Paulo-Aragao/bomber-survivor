@@ -14,9 +14,10 @@ class GemSystem {
 
     handleGemDrop(x, y, value) {
         const p = this.scene.playerSystem.stats;
+        const gemCfg = CONFIG ? CONFIG.balance.gems : {};
         if (this.gems.length >= GEM_CAP) {
             this.xpBank += Math.floor(value * p.xpMultiplier);
-            if (Math.random() < 0.1) {
+            if (Math.random() < (gemCfg.megaGemChance || 0.1)) {
                 this.spawnMegaGem(x, y);
             }
             return;
@@ -25,33 +26,38 @@ class GemSystem {
     }
 
     spawnGem(x, y, value) {
+        const gemCfg = CONFIG ? CONFIG.balance.gems : {};
+        const gemVelocity = gemCfg.gemVelocity || 4;
         this.gems.push({
             x, y, value,
-            lifetime: 1800,
+            lifetime: gemCfg.lifetime || 1800,
             magnet: false,
-            vx: (Math.random() - 0.5) * 4,
-            vy: (Math.random() - 0.5) * 4,
+            vx: (Math.random() - 0.5) * gemVelocity,
+            vy: (Math.random() - 0.5) * gemVelocity,
             mega: false,
-            size: 6,
+            size: gemCfg.normalGemSize || 6,
         });
     }
 
     spawnMegaGem(x, y) {
+        const gemCfg = CONFIG ? CONFIG.balance.gems : {};
+        const megaVelocity = gemCfg.megaGemVelocity || 2;
         this.gems.push({
             x, y, value: 0,
-            lifetime: 1800,
+            lifetime: gemCfg.lifetime || 1800,
             magnet: false,
-            vx: (Math.random() - 0.5) * 2,
-            vy: (Math.random() - 0.5) * 2,
+            vx: (Math.random() - 0.5) * megaVelocity,
+            vy: (Math.random() - 0.5) * megaVelocity,
             mega: true,
-            size: 12,
+            size: gemCfg.megaGemSize || 12,
         });
     }
 
     spawnChestDrop(x, y) {
+        const gemCfg = CONFIG ? CONFIG.balance.gems : {};
         this.chestDrops.push({
             x, y,
-            lifetime: 600,
+            lifetime: gemCfg.chestLifetime || 600,
             bob: 0,
         });
     }
@@ -60,13 +66,21 @@ class GemSystem {
         const p = this.scene.playerSystem.stats;
         const juice = this.scene.juiceSystem;
         const audio = this.scene.audioSystem;
+        const gemCfg = CONFIG ? CONFIG.balance.gems : {};
+        const magnetSpeed = gemCfg.magnetSpeed || 6;
+        const collectRange = gemCfg.collectRange || 0.6;
+        const gemFriction = gemCfg.gemFriction || 0.92;
+        const chestCollectRange = gemCfg.chestCollectRange || 0.8;
+        const bal = CONFIG ? CONFIG.balance.player : {};
+        const xpScaleMultiplier = bal.xpScaleMultiplier || 1.4;
+        const xpScaleFlat = bal.xpScaleFlat || 2;
 
         for (let i = this.gems.length - 1; i >= 0; i--) {
             const g = this.gems[i];
             g.lifetime--;
 
-            g.vx *= 0.92;
-            g.vy *= 0.92;
+            g.vx *= gemFriction;
+            g.vy *= gemFriction;
             g.x += g.vx;
             g.y += g.vy;
 
@@ -75,12 +89,12 @@ class GemSystem {
             // Magnet
             if (dist < TILE * p.magnetRange) {
                 const angle = Math.atan2(p.y - g.y, p.x - g.x);
-                g.x += Math.cos(angle) * 6;
-                g.y += Math.sin(angle) * 6;
+                g.x += Math.cos(angle) * magnetSpeed;
+                g.y += Math.sin(angle) * magnetSpeed;
             }
 
             // Collect
-            if (dist < TILE * 0.6) {
+            if (dist < TILE * collectRange) {
                 let xpGain = Math.floor(g.value * p.xpMultiplier);
 
                 // Drain XP bank
@@ -89,7 +103,7 @@ class GemSystem {
                     this.xpBank = 0;
                     if (juice) {
                         juice.spawnParticles(g.x, g.y, 0xffcc00, 8, 4);
-                        juice.spawnDamageNumber(p.x, p.y - TILE, '💎 XP BANKED!', '#ffcc00');
+                        juice.spawnDamageNumber(p.x, p.y - TILE, '\ud83d\udc8e XP BANKED!', '#ffcc00');
                     }
                 }
 
@@ -103,7 +117,7 @@ class GemSystem {
                 while (p.xp >= p.xpNeeded) {
                     p.xp -= p.xpNeeded;
                     p.level++;
-                    p.xpNeeded = Math.floor(p.xpNeeded * 1.4) + 2;
+                    p.xpNeeded = Math.floor(p.xpNeeded * xpScaleMultiplier) + xpScaleFlat;
                     if (p.invincibleOnLevelUp > 0) {
                         p.invincible = Math.max(p.invincible, p.invincibleOnLevelUp);
                         if (juice) juice.spawnParticles(p.x, p.y, 0xffff00, 10, 5);
@@ -128,7 +142,7 @@ class GemSystem {
             c.bob += 0.08;
 
             const dist = Math.hypot(p.x - c.x, p.y - c.y);
-            if (dist < TILE * 0.8) {
+            if (dist < TILE * chestCollectRange) {
                 this.chestDrops.splice(i, 1);
                 this.scene.registry.events.emit('levelUp', true);
                 if (juice) juice.triggerScreenFlash('rgba(255, 200, 0, 0.3)', 150);

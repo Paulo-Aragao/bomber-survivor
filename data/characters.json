@@ -1,0 +1,76 @@
+[
+  {
+    "id": "aussa", "name": "AUSSA", "icon": "\ud83c\udf3f", "element": "earth",
+    "subtitle": "Earth Charmer",
+    "desc": "Cria rochas ao explodir. Terremotos atordoam.",
+    "stats": "+2 HP | +1 Armadura | Explos\u00f5es Rochosas",
+    "color": "#8B7355", "bombColor": "#8B7355", "explosionColor": "#A0826D",
+    "spriteSheet": "aussa", "portrait": "Aussa/portrait.png",
+    "modifiers": {
+      "maxHp": "+2", "hp": "+2", "armor": "+1",
+      "bombShape": "cross", "bombRange": "+1",
+      "element": "earth", "earthRocks": true
+    }
+  },
+  {
+    "id": "eria", "name": "ERIA", "icon": "\ud83d\udca7", "element": "water",
+    "subtitle": "Water Charmer",
+    "desc": "Congela inimigos. Explos\u00f5es onduladas.",
+    "stats": "70% Congelar | Ondas d'Agua | +Velocidade",
+    "color": "#5B9BD5", "bombColor": "#5B9BD5", "explosionColor": "#7AC5F5",
+    "spriteSheet": "eria", "portrait": "Eria/portrait.png",
+    "modifiers": {
+      "freezeChance": 0.7, "bombShape": "circle",
+      "speed": "+0.5", "element": "water", "waterPuddles": true
+    }
+  },
+  {
+    "id": "hiita", "name": "HIITA", "icon": "\ud83d\udd25", "element": "fire",
+    "subtitle": "Fire Charmer",
+    "desc": "Queima tudo. Explos\u00f5es em cadeia.",
+    "stats": "+3 Queimar | Pavio Curto | Trilhas de Fogo",
+    "color": "#E74C3C", "bombColor": "#FF6B3C", "explosionColor": "#FF8C3C",
+    "spriteSheet": "hiita", "portrait": "Hiita/portrait.png",
+    "modifiers": {
+      "burnDamage": "+3", "bombCooldownMax": "*0.6", "bombTimer": "*0.65",
+      "piercing": "+2", "element": "fire", "fireTrails": true
+    }
+  },
+  {
+    "id": "wynn", "name": "WYNN", "icon": "\ud83c\udf2a\ufe0f", "element": "wind",
+    "subtitle": "Wind Charmer",
+    "desc": "Ventania empurra inimigos. Ultra r\u00e1pida.",
+    "stats": "+100% Velocidade | Empurr\u00e3o | Magnetismo",
+    "color": "#52C77D", "bombColor": "#52C77D", "explosionColor": "#72E79D",
+    "spriteSheet": "wynn", "portrait": "Wynn/portrait.png",
+    "modifiers": {
+      "speed": "+2.0", "bombShape": "xshape", "magnetRange": "+4",
+      "windSpin": true, "element": "wind", "windPushback": true
+    }
+  },
+  {
+    "id": "lyna", "name": "LYNA", "icon": "\u2728", "element": "light",
+    "subtitle": "Light Charmer",
+    "desc": "Regenera\u00e7\u00e3o. Aura de luz. Explos\u00f5es estelares.",
+    "stats": "+1 HP Regen | Aura Sagrada | Estrela 8-pontas",
+    "color": "#FFD700", "bombColor": "#FFD700", "explosionColor": "#FFFFCC",
+    "spriteSheet": "lyna", "portrait": "Lyna/portrait.png",
+    "modifiers": {
+      "maxHp": "+1", "hp": "+1", "bombShape": "star",
+      "element": "light", "hpRegen": 0.05, "lightAura": true, "flashBlind": 60
+    }
+  },
+  {
+    "id": "dharc", "name": "DHARC", "icon": "\ud83c\udf11", "element": "dark",
+    "subtitle": "Dark Charmer",
+    "desc": "Vampirismo. Teleporte sombrio. Velocidade noturna.",
+    "stats": "Vampirismo 30% | Teleporte | +Velocidade (Low HP)",
+    "color": "#4B0082", "bombColor": "#4B0082", "explosionColor": "#8B008B",
+    "spriteSheet": "dharc", "portrait": "Dharc/portrait.png",
+    "modifiers": {
+      "bombShape": "xshape", "element": "dark",
+      "vampirism": 0.3, "shadowTeleport": true, "nightSpeed": true,
+      "maxHp": { "add": -1 }
+    }
+  }
+]

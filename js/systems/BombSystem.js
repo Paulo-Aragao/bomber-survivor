@@ -83,21 +83,25 @@ class BombSystem {
     }
 
     explodeBomb(bomb) {
+        const combat = CONFIG ? CONFIG.balance.combat : {};
+        const explosionTimer = combat.explosionTimer || 30;
+
         const tiles = this.getExplosionTiles(bomb.gx, bomb.gy, bomb.range, bomb.shape);
         for (const t of tiles) {
             this.explosions.push({
                 gx: t.gx, gy: t.gy,
-                timer: 30,
+                timer: explosionTimer,
                 isCenter: (t.gx === bomb.gx && t.gy === bomb.gy),
                 element: bomb.element || null
             });
         }
 
         const juice = this.scene.juiceSystem;
+        const juiceCfg = CONFIG ? CONFIG.balance.juice : {};
         if (juice) {
-            juice.screenShake = 14;
+            juice.screenShake = juiceCfg.explosionShake || 14;
             juice.triggerWhiteFlash();
-            juice.triggerHitStop(3);
+            juice.triggerHitStop(juiceCfg.hitStopExplosion || 3);
         }
 
         if (this.scene.audioSystem) {
@@ -107,6 +111,7 @@ class BombSystem {
 
     updateBombs(gameTime) {
         const enemies = this.scene.enemySystem ? this.scene.enemySystem.enemies : [];
+        const gravityPullForce = CONFIG ? CONFIG.balance.combat.gravityPullForce : 1.5;
 
         for (let i = this.bombs.length - 1; i >= 0; i--) {
             const b = this.bombs[i];
@@ -122,8 +127,8 @@ class BombSystem {
                     const dist = Math.hypot(en.x - bx, en.y - by);
                     if (dist < pullRange && dist > TILE * 0.5) {
                         const angle = Math.atan2(by - en.y, bx - en.x);
-                        en.x += Math.cos(angle) * 1.5;
-                        en.y += Math.sin(angle) * 1.5;
+                        en.x += Math.cos(angle) * gravityPullForce;
+                        en.y += Math.sin(angle) * gravityPullForce;
                         en.targetX = en.x;
                         en.targetY = en.y;
                         en.gx = Math.floor(en.x / TILE);
@@ -154,29 +159,35 @@ class BombSystem {
         const enemySystem = this.scene.enemySystem;
         const juice = this.scene.juiceSystem;
         const elemental = this.scene.elementalSystem;
+        const combat = CONFIG ? CONFIG.balance.combat : {};
+        const baseDamage = combat.baseDamage || 1;
+        const critMultiplier = combat.critMultiplier || 2;
+        const freezeDuration = combat.freezeDuration || 120;
+        const burnDuration = combat.burnDuration || 180;
+        const explosionTimer = combat.explosionTimer || 30;
 
         for (let i = this.explosions.length - 1; i >= 0; i--) {
             const e = this.explosions[i];
             e.timer--;
 
-            if (e.timer > 20 && enemySystem) {
+            if (e.timer > explosionTimer - 10 && enemySystem) {
                 const enemies = enemySystem.enemies;
                 for (let j = enemies.length - 1; j >= 0; j--) {
                     const en = enemies[j];
                     const enGx = Math.floor(en.x / TILE);
                     const enGy = Math.floor(en.y / TILE);
                     if (enGx === e.gx && enGy === e.gy) {
-                        let dmg = 1 + p.piercing;
+                        let dmg = baseDamage + p.piercing;
                         const isCrit = p.critChance > 0 && Math.random() < p.critChance;
                         if (isCrit) {
-                            dmg *= 2;
+                            dmg *= critMultiplier;
                             if (juice) juice.triggerCritFlash();
                         }
                         en.hp -= dmg;
                         en.flash = 8;
 
-                        if (p.freezeChance > 0 && Math.random() < p.freezeChance) en.frozen = 120;
-                        if (p.burnDamage > 0) { en.burning = 180; en.burnDmg = p.burnDamage; }
+                        if (p.freezeChance > 0 && Math.random() < p.freezeChance) en.frozen = freezeDuration;
+                        if (p.burnDamage > 0) { en.burning = burnDuration; en.burnDmg = p.burnDamage; }
 
                         if (juice) {
                             juice.spawnDamageNumber(en.x, en.y - TILE * 0.3,
@@ -202,7 +213,7 @@ class BombSystem {
             }
 
             // Spawn elemental particles on first frame
-            if (e.timer === 29 && e.element && elemental) {
+            if (e.timer === explosionTimer - 1 && e.element && elemental) {
                 const cx = e.gx * TILE + TILE / 2;
                 const cy = e.gy * TILE + TILE / 2;
                 elemental.createElementalExplosion(e.element, cx, cy);
@@ -228,6 +239,7 @@ class BombSystem {
         const camW = camera.width;
         const camH = camera.height;
         const elemental = this.scene.elementalSystem;
+        const explosionTimer = CONFIG ? CONFIG.balance.combat.explosionTimer : 30;
 
         // Bomb preview
         for (const b of this.bombs) {
@@ -318,8 +330,8 @@ class BombSystem {
             if (ex < camX - TILE * 2 || ex > camX + camW + TILE * 2 ||
                 ey < camY - TILE * 2 || ey > camY + camH + TILE * 2) continue;
 
-            const progress = 1 - e.timer / 30;
-            const alpha = e.timer / 30;
+            const progress = 1 - e.timer / explosionTimer;
+            const alpha = e.timer / explosionTimer;
 
             const rgb = elemental ? elemental.getElementRGB(e.element) : { r: 255, g: 180, b: 50 };
             const cx = ex + TILE / 2;
@@ -340,7 +352,7 @@ class BombSystem {
             this.explosionGraphics.fillCircle(cx, cy, TILE * 0.65);
 
             // Shockwave ring
-            if (e.timer > 20 && e.isCenter) {
+            if (e.timer > explosionTimer - 10 && e.isCenter) {
                 const ring = 1 + progress * 2;
                 this.explosionGraphics.lineStyle(Math.max(1, 3 - progress * 2), outerColor, alpha * 0.5);
                 this.explosionGraphics.strokeCircle(cx, cy, TILE * ring * 0.3);

@@ -83,25 +83,26 @@ class PlayerSystem {
     }
 
     initStats() {
+        const bal = CONFIG ? CONFIG.balance.player : {};
         this.stats = {
             x: WORLD_W / 2,
             y: WORLD_H / 2,
-            speed: 3.2,
-            hp: 5,
-            maxHp: 5,
-            bombMax: 1,
-            bombRange: 2,
+            speed: bal.speed || 3.2,
+            hp: bal.hp || 5,
+            maxHp: bal.maxHp || 5,
+            bombMax: bal.bombMax || 1,
+            bombRange: bal.bombRange || 2,
             bombCooldown: 0,
-            bombCooldownMax: 90,
-            bombTimer: 120,
-            bombShape: 'cross',
+            bombCooldownMax: bal.bombCooldownMax || 90,
+            bombTimer: bal.bombTimer || 120,
+            bombShape: bal.bombShape || 'cross',
             invincible: 0,
             level: 1,
             xp: 0,
-            xpNeeded: 5,
-            magnetRange: 3,
+            xpNeeded: bal.xpBase || 5,
+            magnetRange: bal.magnetRange || 3,
             armor: 0,
-            xpMultiplier: 1,
+            xpMultiplier: bal.xpMultiplier || 1,
             thorns: 0,
             regen: 0,
             regenTimer: 0,
@@ -179,9 +180,10 @@ class PlayerSystem {
         }
 
         // Regeneration
+        const regenTick = CONFIG ? CONFIG.balance.regen.tickFrames : 600;
         if (p.regen > 0) {
             p.regenTimer++;
-            if (p.regenTimer >= 600) {
+            if (p.regenTimer >= regenTick) {
                 p.regenTimer = 0;
                 const healAmt = p.regen;
                 p.hp = Math.min(p.maxHp, p.hp + healAmt);
@@ -203,11 +205,12 @@ class PlayerSystem {
 
     takeDamage(amount) {
         const p = this.stats;
+        const combat = CONFIG ? CONFIG.balance.combat : {};
         if (p.invincible > 0) return false;
 
         if (p.shield > 0) {
             p.shield--;
-            p.invincible = 40;
+            p.invincible = combat.shieldInvincibility || 40;
             if (this.scene.juiceSystem) {
                 this.scene.juiceSystem.spawnDamageNumber(p.x, p.y - TILE * 0.5, 'BLOCKED!', '#44aaff');
                 this.scene.juiceSystem.spawnParticles(p.x, p.y, 0x44aaff, 6, 3);
@@ -217,10 +220,10 @@ class PlayerSystem {
 
         const dmg = Math.max(1, amount - p.armor);
         p.hp -= dmg;
-        p.invincible = 60;
+        p.invincible = combat.hitInvincibility || 60;
 
         if (this.scene.juiceSystem) {
-            this.scene.juiceSystem.damageFlash = 15;
+            this.scene.juiceSystem.damageFlash = (CONFIG ? CONFIG.balance.juice.damageFlashFrames : 15);
             this.scene.juiceSystem.screenShake = 5;
             this.scene.juiceSystem.spawnDamageNumber(p.x, p.y - TILE * 0.5, '-' + dmg, '#ff4444');
             this.scene.juiceSystem.triggerScreenFlash('rgba(255, 0, 0, 0.2)', 100);

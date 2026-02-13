@@ -18,20 +18,53 @@ class EnemySystem {
 
     getHPMultiplier(gameTime) {
         const minutes = gameTime / 3600;
-        if (this.enemies.length >= this.getMaxEnemies(gameTime) * 0.9) {
-            return 1 + minutes * 0.3;
+        const w = CONFIG ? CONFIG.balance.waves : null;
+        const nearCapThreshold = w ? w.nearCapThreshold : 0.9;
+        const hpScaleNearCap = w ? w.hpScaleNearCap : 0.3;
+        const hpScalePostMinute = w ? w.hpScalePostMinute : 10;
+        const hpScaleRate = w ? w.hpScaleRate : 0.15;
+
+        if (this.enemies.length >= this.getMaxEnemies(gameTime) * nearCapThreshold) {
+            return 1 + minutes * hpScaleNearCap;
         }
-        return 1 + Math.max(0, minutes - 10) * 0.15;
+        return 1 + Math.max(0, minutes - hpScalePostMinute) * hpScaleRate;
     }
 
-    spawnEnemy(gameTime) {
-        if (this.enemies.length >= this.getMaxEnemies(gameTime)) return;
-
+    getAvailableEnemies(gameTime) {
+        if (CONFIG && CONFIG.enemies.unlockSchedule) {
+            const timeSeconds = gameTime / 60;
+            return CONFIG.enemies.unlockSchedule
+                .filter(entry => timeSeconds >= entry.timeSeconds)
+                .map(entry => entry.type);
+        }
+        // Fallback
         let available = ['slime'];
         if (gameTime > 30 * 60) available.push('bat');
         if (gameTime > 60 * 60) available.push('skeleton');
         if (gameTime > 120 * 60) available.push('ghost');
         if (gameTime > 180 * 60) available.push('demon');
+        return available;
+    }
+
+    getAvailableElites(gameTime) {
+        const minutes = gameTime / 3600;
+        if (CONFIG && CONFIG.enemies.eliteUnlockSchedule) {
+            return CONFIG.enemies.eliteUnlockSchedule
+                .filter(entry => minutes >= entry.minutes)
+                .map(entry => entry.type);
+        }
+        // Fallback
+        let available = ['skeleton'];
+        if (minutes > 2) available.push('ghost');
+        if (minutes > 4) available.push('demon');
+        return available;
+    }
+
+    spawnEnemy(gameTime) {
+        if (this.enemies.length >= this.getMaxEnemies(gameTime)) return;
+
+        const available = this.getAvailableEnemies(gameTime);
+        if (available.length === 0) return;
 
         const typeName = available[Math.floor(Math.random() * available.length)];
         const type = ENEMY_TYPES[typeName];
@@ -95,13 +128,18 @@ class EnemySystem {
     }
 
     spawnElite(gameTime) {
-        let available = ['skeleton'];
-        const minutes = gameTime / 3600;
-        if (minutes > 2) available.push('ghost');
-        if (minutes > 4) available.push('demon');
+        const available = this.getAvailableElites(gameTime);
+        if (available.length === 0) return;
 
         const typeName = available[Math.floor(Math.random() * available.length)];
         const type = ENEMY_TYPES[typeName];
+        const minutes = gameTime / 3600;
+
+        const elite = CONFIG ? CONFIG.balance.elite : {};
+        const hpMult = elite.hpMultiplier || 3;
+        const hpPerMin = elite.hpPerMinute || 2;
+        const sizeMult = elite.sizeMultiplier || 1.5;
+        const moveDelayMult = elite.moveDelayMultiplier || 0.8;
 
         const camera = this.scene.cameras.main;
         const camX = camera.scrollX;
@@ -121,7 +159,7 @@ class EnemySystem {
 
         const cgx = Math.max(0, Math.min(MAP_W - 1, Math.floor(sx / TILE)));
         const cgy = Math.max(0, Math.min(MAP_H - 1, Math.floor(sy / TILE)));
-        const eliteHp = type.hp * 3 + Math.floor(minutes * 2);
+        const eliteHp = type.hp * hpMult + Math.floor(minutes * hpPerMin);
 
         const variant = Math.floor(Math.random() * type.variants);
         const spriteId = type.spriteId + variant;
@@ -130,7 +168,7 @@ class EnemySystem {
         let sprite = null;
         if (this.scene.textures.exists(spriteKey)) {
             sprite = this.scene.add.image(cgx * TILE + TILE / 2, cgy * TILE + TILE / 2, spriteKey);
-            sprite.setDisplaySize(TILE * type.size * 1.5, TILE * type.size * 1.5);
+            sprite.setDisplaySize(TILE * type.size * sizeMult, TILE * type.size * sizeMult);
             sprite.setDepth(200);
         }
 
@@ -146,10 +184,10 @@ class EnemySystem {
             hp: eliteHp,
             maxHp: eliteHp,
             moveTimer: 0,
-            moveDelay: Math.floor(type.moveDelay * 0.8),
+            moveDelay: Math.floor(type.moveDelay * moveDelayMult),
             moving: false,
             flash: 0,
-            size: type.size * 1.5,
+            size: type.size * sizeMult,
             isElite: true,
             frozen: 0,
             burning: 0,
@@ -160,7 +198,7 @@ class EnemySystem {
         const juice = this.scene.juiceSystem;
         if (juice) {
             juice.screenShake = 6;
-            juice.spawnDamageNumber(cgx * TILE + TILE / 2, cgy * TILE, '👑 ELITE!', '#ffcc00');
+            juice.spawnDamageNumber(cgx * TILE + TILE / 2, cgy * TILE, '\ud83d\udc51 ELITE!', '#ffcc00');
         }
     }
 
@@ -184,11 +222,12 @@ class EnemySystem {
         }
 
         // Drop XP or chest
+        const hitStopElite = CONFIG ? CONFIG.balance.juice.hitStopElite : 5;
         if (en.isElite) {
             if (scene.gemSystem) scene.gemSystem.spawnChestDrop(en.x, en.y);
             if (juice) {
                 juice.spawnParticles(en.x, en.y, 0xffcc00, 15, 6);
-                juice.triggerHitStop(5);
+                juice.triggerHitStop(hitStopElite);
                 juice.triggerScreenFlash('rgba(255, 200, 0, 0.25)', 120);
             }
         } else {
@@ -227,10 +266,16 @@ class EnemySystem {
     update(gameTime) {
         const p = this.scene.playerSystem.stats;
         const juice = this.scene.juiceSystem;
+        const combat = CONFIG ? CONFIG.balance.combat : {};
+        const fear = CONFIG ? CONFIG.balance.fearAura : {};
+        const lerpSpeed = CONFIG ? CONFIG.balance.enemyMovement.lerpSpeed : 0.15;
+        const contactRange = combat.contactRange || 0.5;
+        const executeThreshold = combat.executeThreshold || 0.2;
+        const eliteMinSeconds = CONFIG ? CONFIG.balance.elite.minSeconds : 180;
 
         // Elite spawn timer
         this.eliteTimer++;
-        if (this.eliteTimer >= ELITE_SPAWN_INTERVAL && gameTime > 180 * 60) {
+        if (this.eliteTimer >= ELITE_SPAWN_INTERVAL && gameTime > eliteMinSeconds * 60) {
             this.eliteTimer = 0;
             this.spawnElite(gameTime);
         }
@@ -249,12 +294,12 @@ class EnemySystem {
                 if (en.burning % 60 === 0 && en.burnDmg) {
                     en.hp -= en.burnDmg;
                     en.flash = 4;
-                    if (juice) juice.spawnDamageNumber(en.x, en.y - TILE * 0.3, '🔥' + en.burnDmg, '#ff6600');
+                    if (juice) juice.spawnDamageNumber(en.x, en.y - TILE * 0.3, '\ud83d\udd25' + en.burnDmg, '#ff6600');
                 }
             }
 
             // Execute
-            if (p.execute && en.hp > 0 && en.hp <= en.maxHp * 0.2) {
+            if (p.execute && en.hp > 0 && en.hp <= en.maxHp * executeThreshold) {
                 this.scene.registry.set('kills', (this.scene.registry.get('kills') || 0) + 1);
                 if (juice) {
                     juice.addKillStreak();
@@ -270,9 +315,12 @@ class EnemySystem {
             // Fear aura
             let currentMoveDelay = en.moveDelay;
             if (p.fearAura) {
+                const fearBaseRange = fear.baseRange || 3;
+                const fearBaseMult = fear.baseMultiplier || 1.5;
+                const fearPerLevel = fear.perLevelMultiplier || 0.5;
                 const d = Math.hypot(p.x - en.x, p.y - en.y);
-                if (d < TILE * (3 + p.fearAura)) {
-                    currentMoveDelay = Math.floor(en.moveDelay * (1.5 + p.fearAura * 0.5));
+                if (d < TILE * (fearBaseRange + p.fearAura)) {
+                    currentMoveDelay = Math.floor(en.moveDelay * (fearBaseMult + p.fearAura * fearPerLevel));
                 }
             }
 
@@ -301,7 +349,6 @@ class EnemySystem {
 
             // Lerp position
             if (en.moving) {
-                const lerpSpeed = 0.15;
                 en.x += (en.targetX - en.x) * lerpSpeed;
                 en.y += (en.targetY - en.y) * lerpSpeed;
                 if (Math.abs(en.x - en.targetX) < 1 && Math.abs(en.y - en.targetY) < 1) {
@@ -327,7 +374,7 @@ class EnemySystem {
             // Contact damage
             if (p.invincible <= 0) {
                 const dist = Math.hypot(p.x - en.x, p.y - en.y);
-                if (dist < TILE * 0.5) {
+                if (dist < TILE * contactRange) {
                     const dead = this.scene.playerSystem.takeDamage(1);
                     if (dead) return;
 

@@ -3,7 +3,9 @@
     "allow": [
       "Bash(dir /S \"I:\\\\_HTML PROTOTIPOS\\\\bombervampire\")",
       "Bash(dir:*)",
-      "WebFetch(domain:cdn.jsdelivr.net)"
+      "WebFetch(domain:cdn.jsdelivr.net)",
+      "Bash(python:*)",
+      "Bash(git config:*)"
     ]
   }
 }

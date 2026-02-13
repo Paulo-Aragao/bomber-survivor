@@ -45,11 +45,23 @@ class JuiceSystem {
 
         if (this.killStreak >= 3) {
             const comboEl = document.getElementById('combo-display');
+            const thresholds = CONFIG ? CONFIG.balance.juice.comboThresholds : null;
             let text = '';
-            if (this.killStreak >= 20) text = `☠️ MASSACRE ×${this.killStreak}!`;
-            else if (this.killStreak >= 10) text = `🔥 UNSTOPPABLE ×${this.killStreak}!`;
-            else if (this.killStreak >= 5) text = `💥 RAMPAGE ×${this.killStreak}!`;
-            else text = `⚡ COMBO ×${this.killStreak}!`;
+
+            if (thresholds) {
+                // Find highest matching threshold
+                let match = thresholds[0];
+                for (const t of thresholds) {
+                    if (this.killStreak >= t.kills) match = t;
+                }
+                text = `${match.emoji} ${match.label} \u00d7${this.killStreak}!`;
+            } else {
+                // Fallback
+                if (this.killStreak >= 20) text = `\u2620\ufe0f MASSACRE \u00d7${this.killStreak}!`;
+                else if (this.killStreak >= 10) text = `\ud83d\udd25 UNSTOPPABLE \u00d7${this.killStreak}!`;
+                else if (this.killStreak >= 5) text = `\ud83d\udca5 RAMPAGE \u00d7${this.killStreak}!`;
+                else text = `\u26a1 COMBO \u00d7${this.killStreak}!`;
+            }
 
             if (comboEl) {
                 comboEl.textContent = text;
@@ -73,7 +85,11 @@ class JuiceSystem {
     }
 
     triggerLevelUpBurst(px, py) {
-        for (let i = 0; i < 20; i++) {
+        const juiceCfg = CONFIG ? CONFIG.balance.juice : {};
+        const particleCount = juiceCfg.levelUpParticles || 20;
+        const shakeAmount = juiceCfg.levelUpShake || 8;
+
+        for (let i = 0; i < particleCount; i++) {
             const angle = Math.random() * Math.PI * 2;
             const spd = 3 + Math.random() * 5;
             this.particles.push({
@@ -86,7 +102,7 @@ class JuiceSystem {
                 size: 3 + Math.random() * 5,
             });
         }
-        this.screenShake = 8;
+        this.screenShake = shakeAmount;
         this.triggerScreenFlash('rgba(255, 200, 0, 0.3)', 150);
     }
 

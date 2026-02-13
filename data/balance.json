@@ -1,0 +1,55 @@
+{
+  "map": { "tile": 48, "width": 60, "height": 60 },
+  "caps": { "particles": 200, "enemiesBase": 120, "enemyCapPerMin": 15, "gems": 80 },
+  "player": {
+    "speed": 3.2, "hp": 5, "maxHp": 5,
+    "bombMax": 1, "bombRange": 2, "bombCooldownMax": 90, "bombTimer": 120,
+    "bombShape": "cross",
+    "magnetRange": 3, "xpMultiplier": 1, "xpBase": 5, "xpScaleMultiplier": 1.4, "xpScaleFlat": 2
+  },
+  "combat": {
+    "baseDamage": 1, "critMultiplier": 2,
+    "contactRange": 0.5, "shieldInvincibility": 40, "hitInvincibility": 60,
+    "explosionTimer": 30, "freezeDuration": 120, "burnDuration": 180,
+    "executeThreshold": 0.2, "gravityPullForce": 1.5
+  },
+  "elite": {
+    "hpMultiplier": 3, "hpPerMinute": 2,
+    "sizeMultiplier": 1.5, "moveDelayMultiplier": 0.8,
+    "spawnInterval": 5400, "minSeconds": 180
+  },
+  "waves": {
+    "phases": [
+      { "endMinute": 3, "spawnRateBase": 90, "spawnRateMin": 40, "spawnRateScale": 10, "countBase": 1, "countScale": 0.3 },
+      { "endMinute": 6, "spawnRateBase": 60, "spawnRateMin": 20, "spawnRateScale": 10, "countBase": 2, "countScale": 0.5 },
+      { "endMinute": 10, "spawnRateBase": 30, "spawnRateMin": 12, "spawnRateScale": 4, "countBase": 3, "countScale": 0.3, "countMax": 6, "countUseAbsoluteMinutes": true },
+      { "endMinute": 999, "spawnRateBase": 20, "spawnRateMin": 15, "spawnRateScale": 0.5, "countBase": 3, "countScale": 0.3, "countMax": 6, "countUseAbsoluteMinutes": true }
+    ],
+    "hpScaleNearCap": 0.3,
+    "hpScalePostMinute": 10,
+    "hpScaleRate": 0.15,
+    "nearCapThreshold": 0.9
+  },
+  "gems": {
+    "lifetime": 1800, "magnetSpeed": 6, "collectRange": 0.6,
+    "megaGemChance": 0.1, "megaGemSize": 12, "normalGemSize": 6,
+    "chestLifetime": 600, "chestCollectRange": 0.8,
+    "gemVelocity": 4, "megaGemVelocity": 2, "gemFriction": 0.92
+  },
+  "juice": {
+    "killStreakWindow": 90,
+    "comboThresholds": [
+      { "kills": 3, "label": "COMBO", "emoji": "\u26a1" },
+      { "kills": 5, "label": "RAMPAGE", "emoji": "\ud83d\udca5" },
+      { "kills": 10, "label": "UNSTOPPABLE", "emoji": "\ud83d\udd25" },
+      { "kills": 20, "label": "MASSACRE", "emoji": "\u2620\ufe0f" }
+    ],
+    "hitStopExplosion": 3, "hitStopElite": 5,
+    "levelUpParticles": 20, "levelUpShake": 8,
+    "explosionShake": 14, "damageFlashFrames": 15
+  },
+  "enemyMovement": { "lerpSpeed": 0.15 },
+  "fearAura": { "baseMultiplier": 1.5, "perLevelMultiplier": 0.5, "baseRange": 3 },
+  "regen": { "tickFrames": 600 },
+  "input": { "spaceHoldDuration": 30 }
+}

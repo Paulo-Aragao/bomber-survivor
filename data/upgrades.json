@@ -1,0 +1,43 @@
+[
+  { "icon": "\ud83d\udca3", "name": "+1 BOMBA", "desc": "Coloca mais uma bomba simult\u00e2nea", "category": "bomb", "effects": { "bombMax": "+1" } },
+  { "icon": "\ud83d\udca5", "name": "+1 ALCANCE", "desc": "Explos\u00e3o alcan\u00e7a +1 tile", "category": "bomb", "effects": { "bombRange": "+1" } },
+  { "icon": "\u23f1\ufe0f", "name": "-COOLDOWN", "desc": "Reduz o tempo entre bombas", "category": "bomb", "effects": { "bombCooldownMax": { "add": -12, "min": 15 } } },
+  { "icon": "\ud83e\udde8", "name": "PAVIO CURTO", "desc": "Bombas explodem mais r\u00e1pido", "category": "bomb", "effects": { "bombTimer": { "add": -20, "min": 40 } } },
+  { "icon": "\u2622\ufe0f", "name": "MEGA BOMBA", "desc": "+2 alcance mas +cooldown", "category": "bomb", "effects": { "bombRange": "+2", "bombCooldownMax": "+20" } },
+  { "icon": "\ud83d\udca8", "name": "BOMBA VELOZ", "desc": "+1 bomba e -cooldown", "category": "bomb", "effects": { "bombMax": "+1", "bombCooldownMax": { "add": -8, "min": 15 } } },
+  { "icon": "\ud83d\udd17", "name": "REA\u00c7\u00c3O EM CADEIA", "desc": "Bombas detonam outras bombas", "category": "bomb", "effects": { "chainExplosion": true } },
+  { "icon": "\ud83d\udd25", "name": "EXPLOS\u00c3O PERFURANTE", "desc": "Explos\u00f5es causam +1 dano", "category": "bomb", "effects": { "piercing": "+1" } },
+
+  { "icon": "\u2b55", "name": "BOMBA CIRCULAR", "desc": "Explos\u00e3o em \u00e1rea circular", "category": "bombShape", "effects": { "bombShape": "circle" } },
+  { "icon": "\u2716\ufe0f", "name": "BOMBA X", "desc": "Explos\u00e3o em diagonal (X)", "category": "bombShape", "effects": { "bombShape": "xshape" } },
+  { "icon": "\u2b50", "name": "BOMBA ESTRELA", "desc": "Cruz + diagonal combinadas", "category": "bombShape", "effects": { "bombShape": "star" } },
+  { "icon": "\u2796", "name": "BOMBA LINHA", "desc": "Explos\u00e3o em linha dupla", "category": "bombShape", "effects": { "bombShape": "line" } },
+  { "icon": "\ud83d\udfe5", "name": "BOMBA TOTAL", "desc": "Explos\u00e3o em quadrado completo", "category": "bombShape", "effects": { "bombShape": "full" } },
+
+  { "icon": "\u26a1", "name": "+VELOCIDADE", "desc": "Move mais r\u00e1pido", "category": "player", "effects": { "speed": "+0.5" } },
+  { "icon": "\u2764\ufe0f", "name": "+1 HP MAX", "desc": "Aumenta e recupera vida m\u00e1xima", "category": "player", "effects": { "maxHp": "+1", "healToMax": true } },
+  { "icon": "\ud83d\udc96", "name": "CURA", "desc": "Recupera toda a vida", "category": "player", "effects": { "healToMax": true } },
+  { "icon": "\ud83d\udee1\ufe0f", "name": "ARMADURA", "desc": "Reduz 1 de dano recebido", "category": "player", "effects": { "armor": "+1" } },
+  { "icon": "\ud83c\udf00", "name": "ESCUDO", "desc": "Bloqueia o pr\u00f3ximo hit", "category": "player", "effects": { "shield": "+1" } },
+  { "icon": "\ud83d\udc9a", "name": "REGENERA\u00c7\u00c3O", "desc": "Recupera 1 HP a cada 10s", "category": "player", "effects": { "regen": "+1" } },
+  { "icon": "\ud83c\udfc3", "name": "DASH", "desc": "Aumenta velocidade muito", "category": "player", "effects": { "speed": "+1.0" } },
+  { "icon": "\ud83d\udcaa", "name": "TANQUE", "desc": "+3 HP max, -velocidade", "category": "player", "effects": { "maxHp": "+3", "hp": "+3", "speed": { "add": -0.5, "min": 1.5 } } },
+  { "icon": "\ud83e\udeb6", "name": "FANTASMA", "desc": "3s invenc\u00edvel ao subir de n\u00edvel", "category": "player", "effects": { "invincibleOnLevelUp": 180 } },
+
+  { "icon": "\ud83e\uddf2", "name": "MAGNETISMO", "desc": "Alcance de coleta +2 tiles", "category": "xp", "effects": { "magnetRange": "+2" } },
+  { "icon": "\u2728", "name": "XP DUPLO", "desc": "+50% XP por gem", "category": "xp", "effects": { "xpMultiplier": "+0.5" } },
+  { "icon": "\ud83c\udf40", "name": "SORTE", "desc": "Inimigos dropam gems extras", "category": "xp", "effects": { "luckyDrop": "+1" } },
+  { "icon": "\ud83c\udf2a\ufe0f", "name": "V\u00c1CUO", "desc": "Puxa todas as gems da tela", "category": "xp", "effects": { "magnetRange": "+1" } },
+  { "icon": "\ud83d\udcb0", "name": "TESOURO", "desc": "Gems valem o dobro", "category": "xp", "effects": { "xpMultiplier": "+1.0" } },
+
+  { "icon": "\ud83c\udf35", "name": "ESPINHOS", "desc": "Reflete 1 dano no contato", "category": "combat", "effects": { "thorns": "+1" } },
+  { "icon": "\ud83e\uddca", "name": "CONGELAR", "desc": "30% chance de congelar inimigos", "category": "combat", "effects": { "freezeChance": "+0.3" } },
+  { "icon": "\u2604\ufe0f", "name": "QUEIMAR", "desc": "Explos\u00f5es queimam (1 dano/s)", "category": "combat", "effects": { "burnDamage": "+1" } },
+  { "icon": "\ud83c\udfaf", "name": "CR\u00cdTICO", "desc": "20% chance de dano dobrado", "category": "combat", "effects": { "critChance": "+0.2" } },
+  { "icon": "\ud83d\udca0", "name": "BOMBA AO MATAR", "desc": "Mini explos\u00e3o ao matar inimigo", "category": "combat", "effects": { "bombOnKill": true } },
+  { "icon": "\u26d4", "name": "AURA DE MEDO", "desc": "Inimigos pr\u00f3ximos ficam lentos", "category": "combat", "effects": { "fearAura": "+1" } },
+  { "icon": "\ud83c\udf29\ufe0f", "name": "TEMPESTADE", "desc": "Raio aleat\u00f3rio a cada 5s", "category": "combat", "effects": { "stormLevel": "+1" } },
+  { "icon": "\ud83d\udc80", "name": "EXECU\u00c7\u00c3O", "desc": "Mata inimigos com <20% HP", "category": "combat", "effects": { "execute": true } },
+  { "icon": "\ud83c\udf1f", "name": "INVENC\u00cdVEL", "desc": "5s invenc\u00edvel ao subir de n\u00edvel", "category": "combat", "effects": { "invincibleOnLevelUp": 300 } },
+  { "icon": "\ud83c\udfb0", "name": "JACKPOT", "desc": "+1 op\u00e7\u00e3o de perk no pr\u00f3ximo level", "category": "combat", "effects": { "extraChoice": "+1" } }
+]
