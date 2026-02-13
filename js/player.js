@@ -22,6 +22,7 @@ const CHARACTERS = [
             p.element = 'earth';
             // Mecânica única: Explosões deixam rochas temporárias que bloqueiam
             p.earthRocks = true;
+            p.speed += 1.0; // Buff de velocidade
         }
     },
     {
@@ -40,7 +41,7 @@ const CHARACTERS = [
         apply: (p) => {
             p.freezeChance = 0.7;
             p.bombShape = 'circle';
-            p.speed += 0.5;
+            p.speed += 0.8; // Aumentado de 0.5 para 0.8
             p.element = 'water';
             // Mecânica única: Explosões deixam poças que desaceleram inimigos
             p.waterPuddles = true;
@@ -61,12 +62,13 @@ const CHARACTERS = [
         explosionColor: '#FF8C3C',
         apply: (p) => {
             p.burnDamage += 3;
-            p.bombCooldownMax = Math.floor(p.bombCooldownMax * 0.6);
+            p.bombMax += 1;
             p.bombTimer = Math.floor(p.bombTimer * 0.65);
             p.piercing += 2;
             p.element = 'fire';
             // Mecânica única: Explosões deixam trilhas de fogo
             p.fireTrails = true;
+            p.speed += 1.2; // Buff de velocidade
         }
     },
     {
@@ -110,9 +112,11 @@ const CHARACTERS = [
             p.hp += 1;
             p.bombShape = 'star'; // 8 direções
             p.element = 'light';
-            p.hpRegen = 0.05; // HP regen passivo
+            p.element = 'light';
+            p.hpRegen = 0.005; // Nerf: 0.05 -> 0.005 (Muito mais lento)
             p.lightAura = true; // Aura de dano
             p.flashBlind = 60; // Duração do atordoamento
+            p.speed += 1.0; // Buff de velocidade
         }
     },
     {
@@ -131,10 +135,12 @@ const CHARACTERS = [
         apply: (p) => {
             p.bombShape = 'xshape'; // X diagonal
             p.element = 'dark';
-            p.vampirism = 0.3; // 30% HP recovery on kill
+            p.element = 'dark';
+            p.vampirism = 0.1; // Nerf: 30% -> 10% chance
             p.shadowTeleport = true; // Pode teleportar para bombas
             p.nightSpeed = true; // Mais rápido com low HP
             p.maxHp -= 1; // Começa mais frágil
+            p.speed += 1.0; // Buff de velocidade
         }
     }
 ];
@@ -153,8 +159,7 @@ function initPlayer() {
         maxHp: 5,
         bombMax: 1,
         bombRange: 2,
-        bombCooldown: 0,
-        bombCooldownMax: 90,
+        bombRange: 2,
         bombTimer: 120,
         bombShape: 'cross',
         invincible: 0,
@@ -204,6 +209,7 @@ function initPlayer() {
 }
 
 function updatePlayer() {
+    if (gamePaused) return;
     let dx = 0, dy = 0;
     if (keys['KeyW'] || keys['ArrowUp']) { dy = -1; player.facing = 2; }
     if (keys['KeyS'] || keys['ArrowDown']) { dy = 1; player.facing = 0; }
@@ -238,7 +244,6 @@ function updatePlayer() {
     // Bomb placement
     if (keys['Space'] && !gamePaused) placeBomb();
 
-    if (player.bombCooldown > 0) player.bombCooldown--;
     if (player.invincible > 0) player.invincible--;
     if (damageFlash > 0) damageFlash--;
 

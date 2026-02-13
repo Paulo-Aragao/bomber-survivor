@@ -7,6 +7,7 @@ class BombSystem {
         this.bombGraphics = null;
         this.explosionGraphics = null;
         this.previewGraphics = null;
+        this.inputDelay = 0;
     }
 
     create() {
@@ -17,7 +18,9 @@ class BombSystem {
 
     placeBomb() {
         const p = this.scene.playerSystem.stats;
-        if (p.bombCooldown > 0) return;
+        // Input delay
+        if (this.inputDelay > 0) return;
+        // Ammo check only
         if (this.bombs.filter(b => !b.exploded).length >= p.bombMax) return;
 
         const gx = Math.floor(p.x / TILE);
@@ -38,11 +41,14 @@ class BombSystem {
             element: p.element || null
         });
 
-        p.bombCooldown = p.bombCooldownMax;
+
 
         if (this.scene.audioSystem) {
             this.scene.audioSystem.playBombPlaceSound(p.element);
         }
+
+        // Set input delay (20 frames = ~330ms)
+        this.inputDelay = 20;
     }
 
     getExplosionTiles(cx, cy, range, shape) {
@@ -112,6 +118,9 @@ class BombSystem {
     updateBombs(gameTime) {
         const enemies = this.scene.enemySystem ? this.scene.enemySystem.enemies : [];
         const gravityPullForce = CONFIG ? CONFIG.balance.combat.gravityPullForce : 1.5;
+
+        // Decrease input delay
+        if (this.inputDelay > 0) this.inputDelay--;
 
         for (let i = this.bombs.length - 1; i >= 0; i--) {
             const b = this.bombs[i];

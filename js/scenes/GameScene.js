@@ -70,6 +70,7 @@ class GameScene extends Phaser.Scene {
         }
 
         // Show HUD
+        // Show HUD
         document.getElementById('hud').style.display = 'flex';
 
         // Events
@@ -143,6 +144,7 @@ class GameScene extends Phaser.Scene {
 
     onLevelUp(isChest) {
         this.gamePaused = true;
+        this.playerSystem.stopMovement();
         this.upgradeSystem.showLevelUp(isChest);
     }
 
@@ -153,7 +155,9 @@ class GameScene extends Phaser.Scene {
 
     onGameOver() {
         this.gameRunning = false;
+        this.gameRunning = false;
         this.gamePaused = true;
+        this.playerSystem.stopMovement();
 
         if (this.audioSystem) this.audioSystem.playGameOverSound();
 
@@ -273,6 +277,7 @@ class GameScene extends Phaser.Scene {
     pauseGame() {
         if (this.gamePaused) return;
         this.gamePaused = true;
+        this.playerSystem.stopMovement();
         this.selectedPauseOption = 0;
         document.getElementById('pause-overlay').classList.add('active');
         this.updatePauseSelection();
@@ -315,6 +320,7 @@ class GameScene extends Phaser.Scene {
         if (this.enemySystem) this.enemySystem.destroy();
         if (this.gemSystem) this.gemSystem.destroy();
 
+        this.gameRunning = false;
         this.gameRunning = false;
         this.gamePaused = false;
     }

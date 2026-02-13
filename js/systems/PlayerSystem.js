@@ -92,8 +92,7 @@ class PlayerSystem {
             maxHp: bal.maxHp || 5,
             bombMax: bal.bombMax || 1,
             bombRange: bal.bombRange || 2,
-            bombCooldown: 0,
-            bombCooldownMax: bal.bombCooldownMax || 90,
+            bombRange: bal.bombRange || 2,
             bombTimer: bal.bombTimer || 120,
             bombShape: bal.bombShape || 'cross',
             invincible: 0,
@@ -169,7 +168,7 @@ class PlayerSystem {
         p.y = this.sprite.y;
 
         // Cooldowns
-        if (p.bombCooldown > 0) p.bombCooldown--;
+
         if (p.invincible > 0) p.invincible--;
 
         // Invincibility blink
@@ -243,6 +242,18 @@ class PlayerSystem {
         if (this.sprite) {
             this.sprite.destroy();
             this.sprite = null;
+        }
+    }
+
+    stopMovement() {
+        if (this.sprite && this.sprite.body) {
+            this.sprite.setVelocity(0, 0);
+            const p = this.stats;
+            // Also stop animation (optional but looks better)
+            const idleKey = `${p.spriteSheet || p.charId}_idle_${p.facing}`;
+            if (this.sprite.anims.exists(idleKey)) {
+                this.sprite.play(idleKey, true);
+            }
         }
     }
 }

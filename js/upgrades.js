@@ -3,10 +3,10 @@ const UPGRADES = [
     // -- BOMB UPGRADES --
     { icon: '💣', name: '+1 BOMBA', desc: 'Coloca mais uma bomba simultânea', apply: () => { player.bombMax++; } },
     { icon: '💥', name: '+1 ALCANCE', desc: 'Explosão alcança +1 tile', apply: () => { player.bombRange++; } },
-    { icon: '⏱️', name: '-COOLDOWN', desc: 'Reduz o tempo entre bombas', apply: () => { player.bombCooldownMax = Math.max(15, player.bombCooldownMax - 12); } },
+    { icon: '⏱️', name: '+1 BOMBA', desc: 'Carrega mais uma bomba', apply: () => { player.bombMax++; } },
     { icon: '🧨', name: 'PAVIO CURTO', desc: 'Bombas explodem mais rápido', apply: () => { player.bombTimer = Math.max(40, player.bombTimer - 20); } },
-    { icon: '☢️', name: 'MEGA BOMBA', desc: '+2 alcance mas +cooldown', apply: () => { player.bombRange += 2; player.bombCooldownMax += 20; } },
-    { icon: '💨', name: 'BOMBA VELOZ', desc: '+1 bomba e -cooldown', apply: () => { player.bombMax++; player.bombCooldownMax = Math.max(15, player.bombCooldownMax - 8); } },
+    { icon: '☢️', name: 'MEGA BOMBA', desc: '+2 alcance mas -velocidade', apply: () => { player.bombRange += 2; player.speed = Math.max(1.5, player.speed - 0.2); } },
+    { icon: '💨', name: 'BOMBA DUPLA', desc: '+2 bombas máximas', apply: () => { player.bombMax += 2; } },
     { icon: '🔗', name: 'REAÇÃO EM CADEIA', desc: 'Bombas detonam outras bombas', apply: () => { player.chainExplosion = true; } },
     { icon: '🔥', name: 'EXPLOSÃO PERFURANTE', desc: 'Explosões causam +1 dano', apply: () => { player.piercing++; } },
 
