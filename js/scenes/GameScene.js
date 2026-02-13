@@ -15,9 +15,9 @@ class GameScene extends Phaser.Scene {
         // Draw ground
         this.createGround();
 
-        // Map border
+        // Map border (Dark Green)
         const border = this.add.graphics().setDepth(10);
-        border.lineStyle(4, 0xff4400, 0.27);
+        border.lineStyle(4, 0x113311, 0.5);
         border.strokeRect(0, 0, WORLD_W, WORLD_H);
 
         // Initialize systems
@@ -128,14 +128,15 @@ class GameScene extends Phaser.Scene {
                 const x = tx * TILE;
                 const y = ty * TILE;
                 const isDark = (tx + ty) % 2 === 0;
-                this.groundGraphics.fillStyle(isDark ? 0x151520 : 0x1a1a28, 1);
+                // Grass colors (Dark Green / Slightly Lighter Green)
+                this.groundGraphics.fillStyle(isDark ? 0x1e3a1e : 0x244224, 1);
                 this.groundGraphics.fillRect(x, y, TILE, TILE);
-                this.groundGraphics.lineStyle(1, 0xffffff, 0.03);
+                this.groundGraphics.lineStyle(1, 0x336633, 0.1);
                 this.groundGraphics.strokeRect(x, y, TILE, TILE);
 
                 // Random detail
                 if ((tx * 7 + ty * 13) % 37 === 0) {
-                    this.groundGraphics.fillStyle(0xffffff, 0.02);
+                    this.groundGraphics.fillStyle(0x44aa44, 0.15); // Grass tufts
                     this.groundGraphics.fillRect(x + TILE * 0.3, y + TILE * 0.3, TILE * 0.15, TILE * 0.15);
                 }
             }
